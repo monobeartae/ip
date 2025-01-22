@@ -1,11 +1,44 @@
 public class MonoBot {
-    private final String SEPARATOR = "\n__________\n\n";
+    private final String INDENT = "   ";
+    private final String SEPARATOR = "________________\n";
 
-    public void printGreetingMessage() {
-        System.out.print(SEPARATOR + "Hi There! I'm Mono. What can I do for you today?"+SEPARATOR);
+
+    private boolean isRunning;
+    
+
+    public MonoBot() {
+        this.isRunning = false;
     }
-    public void printExitMessage() {
-        System.out.print("Goodbye :(" + SEPARATOR);
+
+    public void StartBot() {
+        this.isRunning = true;
+        printMessage("Hi There! I'm Mono. What can I do for you today?");
+    }
+
+    public void processInput(String input) {
+        switch (input) {
+            case "bye":
+                this.StopBot();
+                break;
+            default:
+                this.printMessage(input);
+                break;
+        }
+    }
+
+    public boolean IsRunning() { 
+        return this.isRunning; 
+    }
+
+    private void StopBot() {
+        printMessage("Goodbye :(");
+        this.isRunning = false;
+    }
+
+    private void printMessage(String msg) {
+        System.out.println(this.INDENT + this.SEPARATOR);
+        System.out.println(this.INDENT + msg);
+        System.out.println(this.INDENT + this.SEPARATOR);
     }
     
 }
