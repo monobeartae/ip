@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import tasks.Task;
+import tasks.*;
 
 public class MonoBot {
     private final String INDENT = "   ";
@@ -27,7 +27,7 @@ public class MonoBot {
 
 
     private void StopBot() {
-        printMessage("Goodbye :(");
+        printMessage("Goodbye :( See you again soon!");
         this.isRunning = false;
     }
 
@@ -43,10 +43,23 @@ public class MonoBot {
         String[] split = input.split(" ", 2);
         String cmd = split[0];
         switch (cmd) {
-            case "add":
-                String name = split[1];
-                this.AddTask(new Task(name));
-                this.printMessage("added: " + name);
+            case "todo":
+                String td_name = split[1];
+                this.AddTask(new Todo(td_name));
+                break;
+             case "event":
+                String[] e_split = split[1].split(" /from ");
+                String e_name = e_split[0];
+                String[] e_split_2 = e_split[1].split(" /to ");
+                String from = e_split_2[0];
+                String to = e_split_2[1];
+                this.AddTask(new Event(e_name, from, to));
+                break;
+             case "deadline":
+                String[] d_split = split[1].split(" /by ");
+                String d_name = d_split[0];
+                String deadline = d_split[1];
+                this.AddTask(new Deadline(d_name, deadline));
                 break;
             case "mark":
                 int idx = Integer.parseInt(split[1]);
@@ -57,7 +70,7 @@ public class MonoBot {
                 this.UnmarkCompletedTask(task_idx);
                 break;
             default:
-                this.printMessage("Unknown Command :o");
+                this.printErrorMessage("Unknown Command :o");
                 break;
         }
     }
@@ -92,6 +105,12 @@ public class MonoBot {
 
     private void AddTask(Task task) {
         this.tasklist.add(task);
+        String[] msg = new String[] {
+            "Got it! I've added this task for you:",
+            "  " + task.toString(),
+            "Now you have " + this.tasklist.size() + " task(s) in your list :D"
+        };
+        this.printMessage(msg);
     }
 
 
