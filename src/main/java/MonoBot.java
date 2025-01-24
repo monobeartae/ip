@@ -27,6 +27,7 @@ public class MonoBot {
             "event <task_name> /from <start> /to <end> - add an event task",
             "mark <task_number> - mark a task complete",
             "unmark <task_number> - unmark a completed task",
+            "delete <task_number> - delete a task"
 
         };
         printMessage(welcomeMessages);
@@ -118,6 +119,20 @@ public class MonoBot {
                 }
                 this.MarkTaskComplete(idx);
                 break;
+            case "delete":
+                if (split.length < 2) {
+                    this.printErrorMessage("Which task did you want to delete? I didn't quite catch that! :o");
+                    break;
+                }
+                int d_idx;
+                try {
+                    d_idx = Integer.parseInt(split[1]);
+                } catch (java.lang.NumberFormatException e) {
+                    this.printErrorMessage("Do you perhaps not know what a number is? :o");
+                    break;
+                }
+                this.DeleteTask(d_idx);
+                break;
             case "unmark":
                 if (split.length < 2) {
                     this.printErrorMessage("Which task did you want to unmark? I didn't quite catch that! :o");
@@ -153,13 +168,18 @@ public class MonoBot {
             this.printMessage("Task " + idx + " has been unmarked!");
     }
 
+    
     private void PrintTaskList() {
+        if (this.tasklist.isEmpty()) {
+            this.printMessage("You have no tasks!");
+            return;
+        }
         String[] list = new String[this.tasklist.size()];
         for (int i = 0; i < this.tasklist.size(); i++)
             list[i] = String.format("%d. %s", i + 1, tasklist.get(i).toString());
         this.printMessage(list);
     }
-
+    
     private void AddTask(Task task) {
         this.tasklist.add(task);
         String[] msg = new String[] {
@@ -169,8 +189,21 @@ public class MonoBot {
         };
         this.printMessage(msg);
     }
-
-
+    
+    private void DeleteTask(int task_num) {
+        if (task_num > this.tasklist.size()) {
+            this.printErrorMessage("Task " + task_num + " does not exist! Enter 'list' to view list of tasks.");
+            return;
+        }
+        String[] msg = new String[] {
+            "Got it! I've removed this task for you:",
+            "-> " + this.tasklist.get(task_num - 1).toString(),
+            "Now you have " + (this.tasklist.size() - 1) + " task(s) in your list :D"
+        };
+        this.printMessage(msg);
+        this.tasklist.remove(task_num - 1);
+    }
+    
     private void printMessage(String msg) {
         System.out.println(this.INDENT + this.SEPARATOR);
         System.out.println(this.INDENT + msg);
