@@ -18,7 +18,18 @@ public class MonoBot {
 
     public void StartBot() {
         this.isRunning = true;
-        printMessage("Hi There! I'm Mono. What can I do for you today?");
+        String[] welcomeMessages = new String[] {
+            "Hi There! I'm Mono. What can I do for you today?",
+            "",
+            "list - view tasklist",
+            "todo <task_name> - add a todo task",
+            "deadline <task_name> /by <deadline> - add a deadline task",
+            "event <task_name> /from <start> /to <end> - add an event task",
+            "mark <task_number> - mark a task complete",
+            "unmark <task_number> - unmark a completed task",
+
+        };
+        printMessage(welcomeMessages);
     }
     
     public boolean IsRunning() { 
@@ -44,33 +55,79 @@ public class MonoBot {
         String cmd = split[0];
         switch (cmd) {
             case "todo":
+                if (split.length < 2) {
+                    this.printErrorMessage("Todo description is empty! :o");
+                    break;
+                }
                 String td_name = split[1];
                 this.AddTask(new Todo(td_name));
                 break;
              case "event":
+                if (split.length < 2) {
+                    this.printErrorMessage("Event description is empty! :o");
+                    break;
+                }
+                if (!split[1].contains(" /from ") || !split[1].contains(" /to ")) {
+                    this.printErrorMessage("Even if you don't want to go, you have to set the event details! :o");
+                    break;
+                }
                 String[] e_split = split[1].split(" /from ");
                 String e_name = e_split[0];
+                if (e_split.length < 2) {
+                    this.printErrorMessage("Even if you don't want to go, you have to set the start date! :o");
+                    break;
+                }
                 String[] e_split_2 = e_split[1].split(" /to ");
+                if (e_split_2.length < 2) {
+                    this.printErrorMessage("Even if you don't want it to end, you have to set the end date! :o");
+                    break;
+                }
                 String from = e_split_2[0];
                 String to = e_split_2[1];
                 this.AddTask(new Event(e_name, from, to));
                 break;
              case "deadline":
+                if (split.length < 2) {
+                    this.printErrorMessage("Deadline description is empty! :o");
+                    break;
+                }
+                 if (!split[1].contains(" /by ")) {
+                    this.printErrorMessage("Even if you don't want to do it, you have to set the deadline! :o");
+                    break;
+                }
                 String[] d_split = split[1].split(" /by ");
                 String d_name = d_split[0];
+                if (d_split.length < 2) {
+                    this.printErrorMessage("Even if you don't want to do it, you have to set the deadline! :o");
+                    break;
+                }
                 String deadline = d_split[1];
                 this.AddTask(new Deadline(d_name, deadline));
                 break;
             case "mark":
-                int idx = Integer.parseInt(split[1]);
+                if (split.length < 2) {
+                    this.printErrorMessage("Which task did you want to mark? I didn't quite catch that! :o");
+                    break;
+                }
+                int idx;
+                try {
+                    idx = Integer.parseInt(split[1]);
+                } catch (java.lang.NumberFormatException e) {
+                    this.printErrorMessage("Do you perhaps not know what a number is? :o");
+                    break;
+                }
                 this.MarkTaskComplete(idx);
                 break;
             case "unmark":
+                if (split.length < 2) {
+                    this.printErrorMessage("Which task did you want to unmark? I didn't quite catch that! :o");
+                    break;
+                }
                 int task_idx = Integer.parseInt(split[1]);
                 this.UnmarkCompletedTask(task_idx);
                 break;
             default:
-                this.printErrorMessage("Unknown Command :o");
+                this.printErrorMessage("Unknown Command! :o");
                 break;
         }
     }
@@ -107,7 +164,7 @@ public class MonoBot {
         this.tasklist.add(task);
         String[] msg = new String[] {
             "Got it! I've added this task for you:",
-            "  " + task.toString(),
+            "-> " + task.toString(),
             "Now you have " + this.tasklist.size() + " task(s) in your list :D"
         };
         this.printMessage(msg);
