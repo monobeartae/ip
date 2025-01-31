@@ -1,4 +1,4 @@
-package monobot;
+package app;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,10 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import monobot.tasks.Task;
+import app.tasks.Task;
 
 public class SaveHandler {
-    private final String SAVE_FILE_NAME = "./monobot/data/monobot_tasks.txt";
+    private final String SAVE_FILE_NAME = "./app/data/monobot_tasks.txt";
 
 
     public void SaveTasks(ArrayList<Task> tasks) {
