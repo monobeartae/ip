@@ -8,10 +8,16 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import app.tasks.Task;
 
+/**
+ * Class to handle saving and loading tasks data for MonoBot
+ */
 public class SaveHandler {
     private final String SAVE_FILE_NAME = "./app/data/monobot_tasks.txt";
 
-
+    /**
+     * Saves tasks in specified format in specified file location
+     * @param tasks Tasks to save
+     */
     public void SaveTasks(ArrayList<Task> tasks) {
         File saveFile = new File(SAVE_FILE_NAME);
         try {
@@ -30,6 +36,10 @@ public class SaveHandler {
         }
     }
     
+    /**
+     * Loads tasks from specified save file location
+     * @return Decoded Tasks
+     */
     public ArrayList<Task> LoadTasks() {
         File saveFile = new File(SAVE_FILE_NAME);
         Scanner sc = null;

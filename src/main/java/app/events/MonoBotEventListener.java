@@ -3,7 +3,11 @@ package app.events;
 import app.tasks.Task;
 import java.util.ArrayList;
 
+/**
+ * Callback Handler for MonoBot's events
+ */
 public interface MonoBotEventListener {
+    
     public void OnStartBotEvent();
     public void OnStopBotEvent();
 

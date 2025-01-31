@@ -1,9 +1,13 @@
 package app.tasks;
 
+/**
+ * Represents a Todo
+ */
 public class Todo extends Task{
     public Todo(String name) {
         super(name);
     }
+
     @Override
     public String toString() {
         return "[T]" + super.toString();
@@ -14,6 +18,11 @@ public class Todo extends Task{
         return "T|" + super.EncodeTask();
     }
 
+    /**
+     * Decodes a string representing an encoded Todo task object
+     * @param line Encoded Todo task as a string
+     * @return Todo object
+     */
     public static Todo Decode(String line) {
         String[] split = line.split("\\|");
         if (split.length != 3) {

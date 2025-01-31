@@ -1,5 +1,8 @@
 package app.events;
 
+/**
+ * Callback Handler for InputParser's events
+ */
 public interface InputParserEventListener {
     public void OnSpecialCharacterErrorEvent(String character);
     public void OnNumberFormatErrorEvent();

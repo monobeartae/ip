@@ -3,6 +3,9 @@ package app;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Class to handle retrieving user's input
+ */
 public class UserInputHandler {
     private Scanner sc;
     private InputType inputType;
@@ -20,6 +23,7 @@ public class UserInputHandler {
             System.out.print(e.getMessage());
         }
     }
+
     public String getUserInput() {
         System.out.print("Input: ");
         String input = sc.nextLine();
