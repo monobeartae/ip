@@ -53,7 +53,17 @@ public class MonoBot extends MonoBotEventSource {
     }
 
     public void PrintTaskList() {
-        this.InvokePrintTasklistEvent(tasklist);
+        this.InvokePrintTasklistEvent(this.tasklist);
+    }
+
+    public void PrintFindTaskList(String keyword) {
+        ArrayList<Task> tasks = new ArrayList<>();
+        for (Task task : this.tasklist) {
+            if (task.MatchName(keyword)) {
+                tasks.add(task);
+            }
+        }
+        this.InvokePrintTasklistEvent(tasks);
     }
     
     public void AddTask(Task task) {
