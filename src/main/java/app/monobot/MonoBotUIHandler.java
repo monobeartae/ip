@@ -5,6 +5,9 @@ import app.events.MonoBotEventListener;
 import app.tasks.Task;
 import java.util.ArrayList;
 
+/**
+ * Class handling all UI to be printed to CLI
+ */
 public class MonoBotUIHandler implements MonoBotEventListener, InputParserEventListener {
 
     private final String INDENT = "   ";
@@ -107,16 +110,29 @@ public class MonoBotUIHandler implements MonoBotEventListener, InputParserEventL
     }
 
 
+    /**
+     * Prints a message in the specified format
+     * @param msg
+     */
     private void printMessage(String msg) {
         System.out.println(this.INDENT + this.SEPARATOR);
         System.out.println(this.INDENT + msg);
         System.out.println(this.INDENT + this.SEPARATOR);
     }
 
+    /**
+     * Prints an error message in the specified format
+     * @param msg
+     */
     private void printErrorMessage(String context) {
         this.printMessage("\\(T o T)'/ " + context);
     }
 
+
+    /**
+     * Prints lines of messages in the specified format
+     * @param msg
+     */
     private void printMessage(String[] msg) {
         System.out.println(this.INDENT + this.SEPARATOR);
         for (String s : msg)

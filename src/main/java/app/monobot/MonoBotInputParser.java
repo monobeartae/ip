@@ -7,6 +7,9 @@ import app.tasks.Todo;
 import app.utility.DateTime;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Class handling the parsing of user input into actual commands for MonoBot
+ */
 public class MonoBotInputParser extends InputParserEventSource {
 
     private MonoBot bot = null;
@@ -15,6 +18,10 @@ public class MonoBotInputParser extends InputParserEventSource {
         this.bot = bot;
     }
 
+    /**
+     * Parses raw user input and processes it
+     * @param input User input
+     */
     public void ProcessInput(String input) {
         if (input.equals("bye")) {
             this.bot.StopBot();
@@ -55,6 +62,10 @@ public class MonoBotInputParser extends InputParserEventSource {
         }
     }
 
+    /**
+     * Parses input intended for creating a Todo
+     * @param split Parsed input
+     */
     private void ProcessTodoInput(String[] split) {
         if (split.length < 2) {
             this.InvokeErrorEvent("Todo description is empty! :o");
@@ -64,6 +75,10 @@ public class MonoBotInputParser extends InputParserEventSource {
         this.bot.AddTask(new Todo(td_name));
     }
 
+    /**
+     * Parses input intended for creating an Event
+     * @param split Parsed input
+     */
     private void ProcessEventInput(String[] split) {
         if (split.length < 2) {
             this.InvokeErrorEvent("Event description is empty! :o");
@@ -95,6 +110,10 @@ public class MonoBotInputParser extends InputParserEventSource {
         }
     }
 
+    /**
+     * Parses input intended for creating a Deadline
+     * @param split Parsed input
+     */
     private void ProcessDeadlineInput(String[] split) {
         if (split.length < 2) {
             this.InvokeErrorEvent("Deadline description is empty! :o");
@@ -118,6 +137,10 @@ public class MonoBotInputParser extends InputParserEventSource {
         }
     }
 
+    /**
+     * Parses input intended for marking a task complete
+     * @param split Parsed input
+     */
     private void ProcessMarkInput(String[] split) {
         if (split.length < 2) {
             this.InvokeMissingNumberErrorEvent("mark");
@@ -133,6 +156,10 @@ public class MonoBotInputParser extends InputParserEventSource {
         this.bot.MarkTaskComplete(idx); 
     }
     
+    /**
+     * Parses input intended for unmarking a task
+     * @param split Parsed input
+     */
     private void ProcessUnmarkInput(String[] split) {
         if (split.length < 2) {
             this.InvokeMissingNumberErrorEvent("unmark");
@@ -147,6 +174,11 @@ public class MonoBotInputParser extends InputParserEventSource {
         }
         this.bot.UnmarkCompletedTask(idx);
     }
+
+    /**
+     * Parses input intended for deleting a task
+     * @param split Parsed input
+     */
     private void ProcessDeleteInput(String[] split) {
         if (split.length < 2) {
             this.InvokeMissingNumberErrorEvent("delete");

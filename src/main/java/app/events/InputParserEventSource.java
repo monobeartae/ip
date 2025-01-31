@@ -2,6 +2,9 @@ package app.events;
 
 import java.util.ArrayList;
 
+/**
+ * Callback Invoker for InputParser's events
+ */
 public class InputParserEventSource {
     protected ArrayList<InputParserEventListener> listeners = null;
 

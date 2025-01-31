@@ -3,6 +3,9 @@ package app.events;
 import app.tasks.Task;
 import java.util.ArrayList;
 
+/**
+ * Callback Invoker for MonoBot's events
+ */
 public class MonoBotEventSource {
     protected ArrayList<MonoBotEventListener> listeners = null;
 

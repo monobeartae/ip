@@ -5,6 +5,9 @@ import app.events.MonoBotEventSource;
 import app.tasks.Task;
 import java.util.ArrayList;
 
+/**
+ * Class handling MonoBot's Task Management Logic
+ */
 public class MonoBot extends MonoBotEventSource {
     private boolean isRunning = false;
 
