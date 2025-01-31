@@ -1,11 +1,13 @@
 package tasks;
 
+import utility.DateTime;
+
 public class Event extends Task {
 
-    private String start;
-    private String end;
+    private DateTime start;
+    private DateTime end;
     
-    public Event(String name, String start, String end) {
+    public Event(String name, DateTime start, DateTime end) {
         super(name);
         this.start = start;
         this.end = end;
@@ -13,12 +15,13 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + String.format(" (from: %s to: %s)", this.start, this.end);
+        return "[E]" + super.toString() + String.format(" (from: %s to: %s)", 
+                this.start.AsFormattedOutputString(), this.end.AsFormattedOutputString());
     }
 
     @Override
     public String EncodeTask() {
-        return "E|" + start + "|" + end + "|" + super.EncodeTask();
+        return "E|" + this.start.AsFormattedInputString() + "|" + this.end.AsFormattedInputString() + "|" + super.EncodeTask();
     }
 
     public static Event Decode(String line) {
@@ -27,7 +30,7 @@ public class Event extends Task {
             System.out.println("Event: Could not decode '" + line + "'. PLease check the format.");
             return null;
         }
-        Event e = new Event(split[3], split[1], split[2]);
+        Event e = new Event(split[3], new DateTime(split[1]), new DateTime(split[2]));
         if (split[4].equals("true"))
             e.MarkAsComplete();
         return e;
