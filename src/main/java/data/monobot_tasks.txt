@@ -1,0 +1,3 @@
+T|cry|false
+D|4pm|cryevenmore|true
+E|now|mydeathday|cryharder|false

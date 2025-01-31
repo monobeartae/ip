@@ -24,4 +24,22 @@ public class Task {
     public String toString() {
         return (this.isCompleted ? "[X] " : "[ ] ") + this.taskName;
     }
+
+    public String EncodeTask() {
+        return taskName + "|" + isCompleted + "\n";
+    }
+
+    public static Task DecodeTask(String line) {
+        switch (line.charAt(0)) {
+        case 'T':
+            return Todo.Decode(line);
+        case 'D':
+            return Deadline.Decode(line);
+        case 'E':
+            return Event.Decode(line);
+        default:
+            System.out.println("DecodeTaskFailed: " + line);
+            return new Task(line);
+        }
+    }
 }
