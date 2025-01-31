@@ -40,6 +40,7 @@ public class SaveHandler {
             String line = sc.nextLine();
             tasks.add(Task.DecodeTask(line));
         }
+        sc.close();
         return tasks;
     }
 
