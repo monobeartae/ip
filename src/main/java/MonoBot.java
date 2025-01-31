@@ -6,18 +6,20 @@ public class MonoBot {
     private final String SEPARATOR = "________________\n";
 
 
-    private boolean isRunning;
+    private boolean isRunning = false;;
 
-    private ArrayList<Task> tasklist;
+    private ArrayList<Task> tasklist = null;
+    private SaveHandler saveHandler = null;
     
 
     public MonoBot() {
-        this.isRunning = false;
-        this.tasklist = new ArrayList<>();
+       
     }
 
     public void StartBot() {
         this.isRunning = true;
+        this.saveHandler = new SaveHandler();
+        this.tasklist = saveHandler.LoadTasks();
         String[] welcomeMessages = new String[] {
             "Hi There! I'm Mono. What can I do for you today?",
             "",
@@ -40,6 +42,7 @@ public class MonoBot {
 
     private void StopBot() {
         printMessage("Goodbye :( See you again soon!");
+        this.saveHandler.SaveTasks(this.tasklist);
         this.isRunning = false;
     }
 
@@ -50,6 +53,10 @@ public class MonoBot {
         }
         if (input.equals("list")) {
             this.PrintTaskList();
+            return;
+        }
+        if (input.contains("|")) {
+            this.printErrorMessage("Please don't use '|'! It's my special character, MINE!");
             return;
         }
         String[] split = input.split(" ", 2);
