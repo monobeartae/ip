@@ -56,16 +56,25 @@ public class MonoBotInputParser extends InputParserEventSource {
         case "unmark":
             this.ProcessUnmarkInput(split);
             break;
+        case "find":
+            this.ProcessFindInput(split);
+            break;
         default:
             this.InvokeErrorEvent("Unknown Command! :o");
             break;
         }
+        
     }
 
-    /**
-     * Parses input intended for creating a Todo
-     * @param split Parsed input
-     */
+    private void ProcessFindInput(String[] split) {
+        if (split.length < 2) {
+            this.InvokeErrorEvent("Find search keyword is missing! :o");
+            return;
+        }
+        String keyword = split[1];
+        this.bot.PrintFindTaskList(keyword);
+    }
+
     private void ProcessTodoInput(String[] split) {
         if (split.length < 2) {
             this.InvokeErrorEvent("Todo description is empty! :o");

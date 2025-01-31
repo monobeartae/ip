@@ -139,4 +139,11 @@ public class MonoBotUIHandler implements MonoBotEventListener, InputParserEventL
             System.out.println(this.INDENT + s);
         System.out.println(this.INDENT + this.SEPARATOR);
     }
+
+    private void printMessage(ArrayList<String> msg) {
+        System.out.println(this.INDENT + this.SEPARATOR);
+        for (String s : msg)
+            System.out.println(this.INDENT + s);
+        System.out.println(this.INDENT + this.SEPARATOR);
+    }
 }
