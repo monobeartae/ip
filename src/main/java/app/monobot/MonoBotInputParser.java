@@ -31,27 +31,27 @@ public class MonoBotInputParser extends InputParserEventSource {
         String[] split = input.split(" ", 2);
         String cmd = split[0];
         switch (cmd) {
-            case "todo":
-                this.ProcessTodoInput(split);
-                break;
-            case "event":
-                this.ProcessEventInput(split);
-                break;
-            case "deadline":
-                this.ProcessDeadlineInput(split);
-                break;
-            case "delete":
-                this.ProcessDeleteInput(split);
-                break;
-            case "mark":
-                this.ProcessMarkInput(split);
-                break;
-            case "unmark":
-                this.ProcessUnmarkInput(split);
-                break;
-            default:
-                this.InvokeErrorEvent("Unknown Command! :o");
-                break;
+        case "todo":
+            this.ProcessTodoInput(split);
+            break;
+        case "event":
+            this.ProcessEventInput(split);
+            break;
+        case "deadline":
+            this.ProcessDeadlineInput(split);
+            break;
+        case "delete":
+            this.ProcessDeleteInput(split);
+            break;
+        case "mark":
+            this.ProcessMarkInput(split);
+            break;
+        case "unmark":
+            this.ProcessUnmarkInput(split);
+            break;
+        default:
+            this.InvokeErrorEvent("Unknown Command! :o");
+            break;
         }
     }
 
