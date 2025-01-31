@@ -1,12 +1,17 @@
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import tasks.*;
+import tasks.Deadline;
+import tasks.Event;
+import tasks.Task;
+import tasks.Todo;
+import utility.DateTime;
 
 public class MonoBot {
     private final String INDENT = "   ";
     private final String SEPARATOR = "________________\n";
 
 
-    private boolean isRunning = false;;
+    private boolean isRunning = false;
 
     private ArrayList<Task> tasklist = null;
     private SaveHandler saveHandler = null;
@@ -46,7 +51,7 @@ public class MonoBot {
         this.isRunning = false;
     }
 
-    public void processInput(String input) {
+    public void ProcessInput(String input) {
         if (input.equals("bye")) {
             this.StopBot();
             return;
@@ -63,95 +68,134 @@ public class MonoBot {
         String cmd = split[0];
         switch (cmd) {
             case "todo":
-                if (split.length < 2) {
-                    this.printErrorMessage("Todo description is empty! :o");
-                    break;
-                }
-                String td_name = split[1];
-                this.AddTask(new Todo(td_name));
+                this.ProcessTodoInput(split);
                 break;
-             case "event":
-                if (split.length < 2) {
-                    this.printErrorMessage("Event description is empty! :o");
-                    break;
-                }
-                if (!split[1].contains(" /from ") || !split[1].contains(" /to ")) {
-                    this.printErrorMessage("Even if you don't want to go, you have to set the event details! :o");
-                    break;
-                }
-                String[] e_split = split[1].split(" /from ");
-                String e_name = e_split[0];
-                if (e_split.length < 2) {
-                    this.printErrorMessage("Even if you don't want to go, you have to set the start date! :o");
-                    break;
-                }
-                String[] e_split_2 = e_split[1].split(" /to ");
-                if (e_split_2.length < 2) {
-                    this.printErrorMessage("Even if you don't want it to end, you have to set the end date! :o");
-                    break;
-                }
-                String from = e_split_2[0];
-                String to = e_split_2[1];
-                this.AddTask(new Event(e_name, from, to));
+            case "event":
+                this.ProcessEventInput(split);
                 break;
-             case "deadline":
-                if (split.length < 2) {
-                    this.printErrorMessage("Deadline description is empty! :o");
-                    break;
-                }
-                 if (!split[1].contains(" /by ")) {
-                    this.printErrorMessage("Even if you don't want to do it, you have to set the deadline! :o");
-                    break;
-                }
-                String[] d_split = split[1].split(" /by ");
-                String d_name = d_split[0];
-                if (d_split.length < 2) {
-                    this.printErrorMessage("Even if you don't want to do it, you have to set the deadline! :o");
-                    break;
-                }
-                String deadline = d_split[1];
-                this.AddTask(new Deadline(d_name, deadline));
-                break;
-            case "mark":
-                if (split.length < 2) {
-                    this.printErrorMessage("Which task did you want to mark? I didn't quite catch that! :o");
-                    break;
-                }
-                int idx;
-                try {
-                    idx = Integer.parseInt(split[1]);
-                } catch (java.lang.NumberFormatException e) {
-                    this.printErrorMessage("Do you perhaps not know what a number is? :o");
-                    break;
-                }
-                this.MarkTaskComplete(idx);
+            case "deadline":
+                this.ProcessDeadlineInput(split);
                 break;
             case "delete":
-                if (split.length < 2) {
-                    this.printErrorMessage("Which task did you want to delete? I didn't quite catch that! :o");
-                    break;
-                }
-                int d_idx;
-                try {
-                    d_idx = Integer.parseInt(split[1]);
-                } catch (java.lang.NumberFormatException e) {
-                    this.printErrorMessage("Do you perhaps not know what a number is? :o");
-                    break;
-                }
-                this.DeleteTask(d_idx);
+                this.ProcessDeleteInput(split);
+                break;
+            case "mark":
+                this.ProcessMarkInput(split);
                 break;
             case "unmark":
-                if (split.length < 2) {
-                    this.printErrorMessage("Which task did you want to unmark? I didn't quite catch that! :o");
-                    break;
-                }
-                int task_idx = Integer.parseInt(split[1]);
-                this.UnmarkCompletedTask(task_idx);
+                this.ProcessUnmarkInput(split);
                 break;
             default:
                 this.printErrorMessage("Unknown Command! :o");
                 break;
         }
+    }
+
+    private void ProcessTodoInput(String[] split) {
+        if (split.length < 2) {
+            this.printErrorMessage("Todo description is empty! :o");
+            return;
+        }
+        String td_name = split[1];
+        this.AddTask(new Todo(td_name));
+    }
+
+    private void ProcessEventInput(String[] split) {
+        if (split.length < 2) {
+            this.printErrorMessage("Event description is empty! :o");
+            return;
+        }
+        if (!split[1].contains(" /from ") || !split[1].contains(" /to ")) {
+            this.printErrorMessage("Even if you don't want to go, you have to set the event details! :o");
+            return;
+        }
+        String[] e_split = split[1].split(" /from ");
+        String e_name = e_split[0];
+        if (e_split.length < 2) {
+            this.printErrorMessage("Even if you don't want to go, you have to set the start date! :o");
+            return;
+        }
+        String[] e_split_2 = e_split[1].split(" /to ");
+        if (e_split_2.length < 2) {
+            this.printErrorMessage("Even if you don't want it to end, you have to set the end date! :o");
+            return;
+        }
+        String from = e_split_2[0];
+        String to = e_split_2[1];
+        try {
+            DateTime start = new DateTime(from);
+            DateTime end = new DateTime(to);
+            this.AddTask(new Event(e_name, start, end));
+        } catch (DateTimeParseException e) {
+            this.printErrorMessage(e.getLocalizedMessage());
+        }
+    }
+
+    private void ProcessDeadlineInput(String[] split) {
+        if (split.length < 2) {
+            this.printErrorMessage("Deadline description is empty! :o");
+            return;
+        }
+        if (!split[1].contains(" /by ")) {
+            this.printErrorMessage("Even if you don't want to do it, you have to set the deadline! :o");
+            return;
+        }
+        String[] d_split = split[1].split(" /by ");
+        String d_name = d_split[0];
+        if (d_split.length < 2) {
+            this.printErrorMessage("Even if you don't want to do it, you have to set the deadline! :o");
+            return;
+        }
+        try {
+            String deadline = d_split[1];
+            this.AddTask(new Deadline(d_name, new DateTime(deadline)));
+        } catch (DateTimeParseException e) {
+            this.printErrorMessage(e.getLocalizedMessage());
+        }
+    }
+
+    private void ProcessMarkInput(String[] split) {
+        if (split.length < 2) {
+            this.printErrorMessage("Which task did you want to mark? I didn't quite catch that! :o");
+            return;
+        }
+        int idx;
+        try {
+            idx = Integer.parseInt(split[1]);
+        } catch (java.lang.NumberFormatException e) {
+            this.printErrorMessage("Do you perhaps not know what a number is? :o");
+            return;
+        }
+        this.MarkTaskComplete(idx); 
+    }
+    
+    private void ProcessUnmarkInput(String[] split) {
+        if (split.length < 2) {
+            this.printErrorMessage("Which task did you want to unmark? I didn't quite catch that! :o");
+            return;
+        }
+        int idx;
+        try {
+            idx = Integer.parseInt(split[1]);
+        } catch (java.lang.NumberFormatException e) {
+            this.printErrorMessage("Do you perhaps not know what a number is? :o");
+            return;
+        }
+        this.UnmarkCompletedTask(idx);
+    }
+    private void ProcessDeleteInput(String[] split) {
+        if (split.length < 2) {
+            this.printErrorMessage("Which task did you want to delete? I didn't quite catch that! :o");
+            return;
+        }
+        int idx;
+        try {
+            idx = Integer.parseInt(split[1]);
+        } catch (java.lang.NumberFormatException e) {
+            this.printErrorMessage("Do you perhaps not know what a number is? :o");
+            return;
+        }
+        this.DeleteTask(idx);
     }
 
     private void MarkTaskComplete(int idx) {
@@ -164,6 +208,7 @@ public class MonoBot {
         else
             this.printMessage("Task " + idx + " has been marked complete!");
     }
+
     private void UnmarkCompletedTask(int idx) {
         if (idx > this.tasklist.size()) {
             this.printErrorMessage("Task " + idx + " does not exist! Enter 'list' to view list of tasks.");
@@ -175,7 +220,6 @@ public class MonoBot {
             this.printMessage("Task " + idx + " has been unmarked!");
     }
 
-    
     private void PrintTaskList() {
         if (this.tasklist.isEmpty()) {
             this.printMessage("You have no tasks!");

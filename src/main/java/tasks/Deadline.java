@@ -1,21 +1,23 @@
 package tasks;
 
-public class Deadline extends Task {
-    private String deadline;
+import utility.DateTime;
 
-    public Deadline(String name, String deadline) {
+public class Deadline extends Task {
+    private DateTime deadline = null;
+
+    public Deadline(String name, DateTime deadline) {
         super(name);
         this.deadline = deadline;
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + String.format(" (by: %s)", this.deadline);
+        return "[D]" + super.toString() + String.format(" (by: %s)", this.deadline.AsFormattedOutputString());
     }
 
     @Override
     public String EncodeTask() {
-        return "D|" + deadline + "|" + super.EncodeTask();
+        return "D|" + this.deadline.AsFormattedInputString() + "|" + super.EncodeTask();
     }
 
     public static Deadline Decode(String line) {
@@ -24,7 +26,7 @@ public class Deadline extends Task {
             System.out.println("Deadline: Could not decode '" + line + "'. PLease check the format.");
             return null;
         }
-        Deadline d = new Deadline(split[2], split[1]);
+        Deadline d = new Deadline(split[2], new DateTime(split[1]));
         if (split[3].equals("true"))
             d.MarkAsComplete();
         return d;

@@ -1,3 +1,4 @@
 T|cry|false
-D|4pm|cryevenmore|true
-E|now|mydeathday|cryharder|false
+D|1/2/2025 1800|cryharder|false
+E|24/3/2025 0500|23/6/2025 0200|cry even more|true
+D|22/3/2025 1200|cry extra|false

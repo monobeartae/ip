@@ -7,7 +7,7 @@ public class Main {
 
         while (bot.IsRunning()) {
             String input = inputHandler.getUserInput();
-            bot.processInput(input);
+            bot.ProcessInput(input);
         }
     }
 }
