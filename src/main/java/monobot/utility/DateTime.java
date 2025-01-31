@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Represents a Date and Time
+ */
 public class DateTime {
     private LocalDateTime datetime = null;
 
@@ -17,10 +20,19 @@ public class DateTime {
         this.datetime = LocalDateTime.parse(inputText, DateTime.GetInputFormatter());
     }
 
+    /**
+     * Formats the date and time according to OUTPUT_FORMAT
+     * @return Formatted DateTime String
+     */
     public String AsFormattedOutputString() {
         return this.datetime.format(DateTime.GetOutputFormatter());
     }
-     public String AsFormattedInputString() {
+
+    /**
+     * Formats the date and time according to INPUT_FORMAT
+     * @return Formatted DateTime String
+     */
+    public String AsFormattedInputString() {
         return this.datetime.format(DateTime.GetInputFormatter());
     }
 

@@ -2,6 +2,9 @@ package monobot.tasks;
 
 import monobot.utility.DateTime;
 
+/**
+ * Represents an Event
+ */
 public class Event extends Task {
 
     private DateTime start;
@@ -24,6 +27,11 @@ public class Event extends Task {
         return "E|" + this.start.AsFormattedInputString() + "|" + this.end.AsFormattedInputString() + "|" + super.EncodeTask();
     }
 
+    /**
+     * Decodes a string representing an encoded Event task object
+     * @param line Encoded Eodo task as a string
+     * @return Event object
+     */
     public static Event Decode(String line) {
         String[] split = line.split("\\|");
         if (split.length != 5) {

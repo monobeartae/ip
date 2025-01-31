@@ -2,6 +2,9 @@ package monobot.tasks;
 
 import monobot.utility.DateTime;
 
+/**
+ * Represents a Deadline
+ */
 public class Deadline extends Task {
     private DateTime deadline = null;
 
@@ -20,6 +23,11 @@ public class Deadline extends Task {
         return "D|" + this.deadline.AsFormattedInputString() + "|" + super.EncodeTask();
     }
 
+    /**
+     * Decodes a string representing an encoded Deadline task object
+     * @param line Encoded Deadline task as a string
+     * @return Deadline object
+     */
     public static Deadline Decode(String line) {
         String[] split = line.split("\\|");
         if (split.length != 4) {
