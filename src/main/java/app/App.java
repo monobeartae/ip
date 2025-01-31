@@ -10,7 +10,7 @@ public class App {
 
         MonoBot bot = new MonoBot();
         MonoBotInputParser inputParser = new MonoBotInputParser(bot);
-        MonoBotUIHandler uiHandler = new MonoBotUIHandler(bot);
+        MonoBotUIHandler uiHandler = new MonoBotUIHandler(bot, inputParser);
         bot.StartBot();
 
         while (bot.IsRunning()) {

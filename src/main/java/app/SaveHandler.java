@@ -9,7 +9,7 @@ import java.util.Scanner;
 import app.tasks.Task;
 
 public class SaveHandler {
-    private final String SAVE_FILE_NAME = "./monobot/data/monobot_tasks.txt";
+    private final String SAVE_FILE_NAME = "./app/data/monobot_tasks.txt";
 
 
     public void SaveTasks(ArrayList<Task> tasks) {

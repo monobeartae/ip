@@ -10,8 +10,9 @@ public class MonoBotUIHandler implements MonoBotEventListener, InputParserEventL
     private final String INDENT = "   ";
     private final String SEPARATOR = "________________\n";
 
-    public MonoBotUIHandler(MonoBot bot) {
+    public MonoBotUIHandler(MonoBot bot, MonoBotInputParser inputParser) {
         bot.AddListener(this);
+        inputParser.AddListener(this);
     }
 
     @Override
