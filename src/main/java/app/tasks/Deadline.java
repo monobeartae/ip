@@ -1,6 +1,6 @@
-package monobot.tasks;
+package app.tasks;
 
-import monobot.utility.DateTime;
+import app.utility.DateTime;
 
 public class Deadline extends Task {
     private DateTime deadline = null;

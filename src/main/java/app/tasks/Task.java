@@ -1,4 +1,4 @@
-package monobot.tasks;
+package app.tasks;
 
 public class Task {
     private String taskName;
