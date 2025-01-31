@@ -1,4 +1,4 @@
-package monobot.utility;
+package app.utility;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

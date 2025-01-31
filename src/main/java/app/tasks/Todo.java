@@ -1,4 +1,4 @@
-package monobot.tasks;
+package app.tasks;
 
 /**
  * Represents a Todo

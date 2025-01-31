@@ -1,4 +1,4 @@
-package monobot;
+package app;
 
 import java.io.IOException;
 import java.util.Scanner;
