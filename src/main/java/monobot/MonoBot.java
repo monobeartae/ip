@@ -2,7 +2,6 @@ package monobot;
 
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-
 import monobot.tasks.Deadline;
 import monobot.tasks.Event;
 import monobot.tasks.Task;
@@ -88,10 +87,22 @@ public class MonoBot {
             case "unmark":
                 this.ProcessUnmarkInput(split);
                 break;
+            case "find":
+                this.ProcessFindInput(split);
+                break;
             default:
                 this.printErrorMessage("Unknown Command! :o");
                 break;
         }
+    }
+
+    private void ProcessFindInput(String[] split) {
+        if (split.length < 2) {
+            this.printErrorMessage("Missing find search keyword! :o");
+            return;
+        }
+        this.PrintFindTaskList(split[1]);
+
     }
 
     private void ProcessTodoInput(String[] split) {
@@ -233,6 +244,25 @@ public class MonoBot {
             list[i] = String.format("%d. %s", i + 1, tasklist.get(i).toString());
         this.printMessage(list);
     }
+
+    private void PrintFindTaskList(String keyword) {
+        if (this.tasklist.isEmpty()) {
+            this.printMessage("You have no tasks!");
+            return;
+        }
+        ArrayList<String> msg = new ArrayList<>();
+        for (int i = 0; i < this.tasklist.size(); i++) {
+            if (!this.tasklist.get(i).MatchName(keyword)) {
+                continue;
+            }
+            msg.add(String.format("%d. %s", i + 1, tasklist.get(i).toString()));
+        }
+        if (msg.isEmpty()) {
+            this.printMessage("You have no tasks!");
+            return;
+        }
+        this.printMessage(msg);
+    }
     
     private void AddTask(Task task) {
         this.tasklist.add(task);
@@ -269,6 +299,13 @@ public class MonoBot {
     }
 
     private void printMessage(String[] msg) {
+        System.out.println(this.INDENT + this.SEPARATOR);
+        for (String s : msg)
+            System.out.println(this.INDENT + s);
+        System.out.println(this.INDENT + this.SEPARATOR);
+    }
+
+    private void printMessage(ArrayList<String> msg) {
         System.out.println(this.INDENT + this.SEPARATOR);
         for (String s : msg)
             System.out.println(this.INDENT + s);

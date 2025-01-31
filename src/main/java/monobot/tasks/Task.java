@@ -20,6 +20,9 @@ public class Task {
         this.isCompleted = false;
         return true;
     }
+    public boolean MatchName(String match) {
+        return this.taskName.contains(match);
+    }
     @Override
     public String toString() {
         return (this.isCompleted ? "[X] " : "[ ] ") + this.taskName;
