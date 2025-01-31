@@ -1,20 +1,23 @@
+package monobot;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import tasks.Task;
+import monobot.tasks.Task;
 
 public class SaveHandler {
-    private final String SAVE_FILE_NAME = "./data/monobot_tasks.txt";
+    private final String SAVE_FILE_NAME = "./monobot/data/monobot_tasks.txt";
 
 
     public void SaveTasks(ArrayList<Task> tasks) {
         File saveFile = new File(SAVE_FILE_NAME);
         try {
-            if (!saveFile.exists()) 
+            if (!saveFile.exists()) {
                 saveFile.createNewFile();
+            }
             FileWriter fw = new FileWriter(saveFile);
             String saveString = "";
             for (Task t : tasks) {

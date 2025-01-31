@@ -1,10 +1,13 @@
+package monobot;
+
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import tasks.Deadline;
-import tasks.Event;
-import tasks.Task;
-import tasks.Todo;
-import utility.DateTime;
+
+import monobot.tasks.Deadline;
+import monobot.tasks.Event;
+import monobot.tasks.Task;
+import monobot.tasks.Todo;
+import monobot.utility.DateTime;
 
 public class MonoBot {
     private final String INDENT = "   ";

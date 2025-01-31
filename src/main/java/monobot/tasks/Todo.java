@@ -1,4 +1,4 @@
-package tasks;
+package monobot.tasks;
 
 public class Todo extends Task{
     public Todo(String name) {
