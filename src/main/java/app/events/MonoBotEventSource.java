@@ -1,7 +1,8 @@
 package app.events;
 
-import app.tasks.Task;
 import java.util.ArrayList;
+
+import app.tasks.Task;
 
 /**
  * Callback Invoker for MonoBot's events
@@ -55,12 +56,6 @@ public class MonoBotEventSource {
     protected void InvokePrintTasklistEvent(final ArrayList<Task> tasklist) {
         for (MonoBotEventListener listener : listeners) {
             listener.OnPrintTasklistEvent(tasklist);
-        }
-    }
-
-    protected void InvokeTaskNumberErrorEvent(int num) {
-        for (MonoBotEventListener listener : listeners) {
-            listener.OnTaskNumberErrorEvent(num);
         }
     }
 }

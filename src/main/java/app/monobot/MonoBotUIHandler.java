@@ -1,21 +1,20 @@
 package app.monobot;
 
-import app.events.InputParserEventListener;
+import java.util.ArrayList;
+
 import app.events.MonoBotEventListener;
 import app.tasks.Task;
-import java.util.ArrayList;
 
 /**
  * Class handling all UI to be printed to CLI
  */
-public class MonoBotUIHandler implements MonoBotEventListener, InputParserEventListener {
+public class MonoBotUIHandler implements MonoBotEventListener {
 
     private final String INDENT = "   ";
     private final String SEPARATOR = "________________\n";
 
-    public MonoBotUIHandler(MonoBot bot, MonoBotInputParser inputParser) {
+    public MonoBotUIHandler(MonoBot bot) {
         bot.AddListener(this);
-        inputParser.AddListener(this);
     }
 
     @Override
@@ -84,32 +83,6 @@ public class MonoBotUIHandler implements MonoBotEventListener, InputParserEventL
         this.printMessage(list);
     }
 
-    @Override
-    public void OnTaskNumberErrorEvent(int num) {
-        this.printErrorMessage("Task " + num + " does not exist! Enter 'list' to view list of tasks.");
-    }
-
-    @Override
-    public void OnSpecialCharacterErrorEvent(String character) {
-        this.printErrorMessage("Please don't use'" + character + "'! It's my special character, MINE!");
-    }
-
-    @Override
-    public void OnNumberFormatErrorEvent() {
-        this.printErrorMessage("Do you perhaps not know what a number is? :o");
-    }
-
-    @Override
-    public void OnMissingNumberErrorEvent(String action) {
-        this.printErrorMessage("Which task did you want to " + action + "? I didn't quite catch that! :o");
-    }
-
-    @Override
-    public void OnErrorEvent(String errorMsg) {
-        this.printErrorMessage(errorMsg);
-    }
-
-
     /**
      * Prints a message in the specified format
      * @param msg
@@ -124,10 +97,9 @@ public class MonoBotUIHandler implements MonoBotEventListener, InputParserEventL
      * Prints an error message in the specified format
      * @param msg
      */
-    private void printErrorMessage(String context) {
+    public void printErrorMessage(String context) {
         this.printMessage("\\(T o T)'/ " + context);
     }
-
 
     /**
      * Prints lines of messages in the specified format
@@ -140,6 +112,10 @@ public class MonoBotUIHandler implements MonoBotEventListener, InputParserEventL
         System.out.println(this.INDENT + this.SEPARATOR);
     }
 
+    /**
+     * Prints lines of messages in the specified format
+     * @param msg
+     */
     private void printMessage(ArrayList<String> msg) {
         System.out.println(this.INDENT + this.SEPARATOR);
         for (String s : msg)

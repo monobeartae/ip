@@ -13,7 +13,7 @@ public class DateTime {
     private static DateTimeFormatter inputFormatter = null;
     private static DateTimeFormatter outputFormatter = null;
 
-    private static final String INPUT_FORMAT = "d/M/yyyy HHmm";
+    public static final String INPUT_FORMAT = "d/M/yyyy HHmm";
     private static final String OUTPUT_FORMAT = "d MMM yyyy h.mm a";
 
     public DateTime(String inputText) throws DateTimeParseException {

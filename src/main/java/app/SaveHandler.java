@@ -6,6 +6,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import app.exceptions.MonoBotException;
 import app.tasks.Task;
 ;
 
@@ -19,7 +21,7 @@ public class SaveHandler {
      * Saves tasks in specified format in specified file location
      * @param tasks Tasks to save
      */
-    public void SaveTasks(ArrayList<Task> tasks) {
+    public void SaveTasks(ArrayList<Task> tasks) throws MonoBotException {
         File saveFile = new File(SAVE_FILE_NAME);
         try {
             if (!saveFile.exists()) {
@@ -33,7 +35,7 @@ public class SaveHandler {
             fw.write(saveString);
             fw.close();
         } catch (IOException e) {
-            System.out.print(e.getMessage());
+            throw new MonoBotException(e.getMessage());
         }
     }
     

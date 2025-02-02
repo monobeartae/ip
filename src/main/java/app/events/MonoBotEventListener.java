@@ -1,7 +1,8 @@
 package app.events;
 
-import app.tasks.Task;
 import java.util.ArrayList;
+
+import app.tasks.Task;
 
 /**
  * Callback Handler for MonoBot's events
@@ -18,6 +19,4 @@ public interface MonoBotEventListener {
     public void OnTaskUnmarkedEvent(int idx, boolean  valid);
 
     public void OnPrintTasklistEvent(final ArrayList<Task> tasklist);
-
-    public void OnTaskNumberErrorEvent(int num);
 }

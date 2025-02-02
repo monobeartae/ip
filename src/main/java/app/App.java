@@ -1,5 +1,8 @@
 package app;
 
+import app.commands.Command;
+import app.exceptions.MonoBotException;
+import app.exceptions.MonoBotRuntimeException;
 import app.monobot.MonoBot;
 import app.monobot.MonoBotInputParser;
 import app.monobot.MonoBotUIHandler;
@@ -9,13 +12,20 @@ public class App {
         UserInputHandler inputHandler = new UserInputHandler();
 
         MonoBot bot = new MonoBot();
-        MonoBotInputParser inputParser = new MonoBotInputParser(bot);
-        MonoBotUIHandler uiHandler = new MonoBotUIHandler(bot, inputParser);
+        MonoBotInputParser inputParser = new MonoBotInputParser();
+        MonoBotUIHandler uiHandler = new MonoBotUIHandler(bot);
         bot.StartBot();
 
         while (bot.IsRunning()) {
             String input = inputHandler.getUserInput();
-            inputParser.ProcessInput(input);
+            try {
+                Command cmd = inputParser.processInput(input);
+                bot.processCommand(cmd);
+            } catch (MonoBotRuntimeException e) {
+                System.out.println(e.getMessage());
+            } catch (MonoBotException e) {
+                uiHandler.printErrorMessage(e.getMessage());
+            }
         }
     }
 }
