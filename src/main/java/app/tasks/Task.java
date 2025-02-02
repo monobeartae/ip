@@ -13,14 +13,14 @@ public class Task {
     }
 
     /**
-     * Marks the task as completed 
+     * Marks the task as completed
      */
     public void markAsComplete() {
         this.isCompleted = true;
     }
 
     /**
-     * Unmarks the task from completion 
+     * Unmarks the task from completion
      */
     public void unmarkCompleted() {
         this.isCompleted = false;
@@ -29,7 +29,7 @@ public class Task {
     public boolean getIsCompleted() {
         return this.isCompleted;
     }
-    
+   
     /**
      * Checks if the task name contains the keyword given
      * @param keyword keyword

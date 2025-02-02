@@ -24,7 +24,8 @@ public class Event extends Task {
 
     @Override
     public String encodeTask() {
-        return "E|" + this.start.formatAsInputString() + "|" + this.end.formatAsInputString() + "|" + super.encodeTask();
+        return "E|" + this.start.formatAsInputString() + "|" + this.end.formatAsInputString() + 
+                "|" + super.encodeTask();
     }
 
     /**
@@ -39,8 +40,9 @@ public class Event extends Task {
             return null;
         }
         Event e = new Event(split[3], new DateTime(split[1]), new DateTime(split[2]));
-        if (split[4].equals("true"))
+        if (split[4].equals("true")) {
             e.markAsComplete();
+        }
         return e;
     }
 }

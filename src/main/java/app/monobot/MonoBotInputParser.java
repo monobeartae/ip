@@ -45,26 +45,26 @@ public class MonoBotInputParser {
         String cmd = split[0];
         switch (cmd) {
         case "todo":
-            return this.ProcessTodoInput(split);
+            return this.processTodoInput(split);
         case "event":
-            return this.ProcessEventInput(split);
+            return this.processEventInput(split);
         case "deadline":
-            return this.ProcessDeadlineInput(split);
+            return this.processDeadlineInput(split);
         case "delete":
-            return this.ProcessDeleteInput(split);
+            return this.processDeleteInput(split);
         case "mark":
-            return this.ProcessMarkInput(split);
+            return this.processMarkInput(split);
         case "unmark":
-            return this.ProcessUnmarkInput(split);
+            return this.processUnmarkInput(split);
         case "find":
-            return this.ProcessFindInput(split);
+            return this.processFindInput(split);
         default:
             throw new UnknownCommandException();
         }
         
     }
 
-    private Command ProcessFindInput(String[] split) throws MonoBotException {
+    private Command processFindInput(String[] split) throws MonoBotException {
         if (split.length < 2) {
             throw new MonoBotException("Find search keyword is missing! :o");
         }
@@ -73,41 +73,40 @@ public class MonoBotInputParser {
         return new StringCommand(CommandType.PrintFindTasklist, keyword);
     }
 
-    private Command ProcessTodoInput(String[] split) throws MonoBotException {
+    private Command processTodoInput(String[] split) throws MonoBotException {
         if (split.length < 2) {
             throw new MonoBotException("Todo description is empty! :o");
         }
-        String td_name = split[1];
-        // this.bot.AddTask(new Todo(td_name));
-        return new TaskCommand(CommandType.AddTask,  new Todo(td_name));
+        String tdName = split[1];
+        return new TaskCommand(CommandType.AddTask, new Todo(tdName));
     }
 
     /**
      * Parses input intended for creating an Event
      * @param split Parsed input
      */
-    private Command ProcessEventInput(String[] split) throws MonoBotException {
+    private Command processEventInput(String[] split) throws MonoBotException {
         if (split.length < 2) {
             throw new MonoBotException("Event description is empty! :o");
         }
         if (!split[1].contains(" /from ") || !split[1].contains(" /to ")) {
             throw new MonoBotException("Even if you don't want to go, you have to set the event details! :o");
         }
-        String[] e_split = split[1].split(" /from ");
-        String e_name = e_split[0];
-        if (e_split.length < 2) {
+        String[] eSplit = split[1].split(" /from ");
+        String eName = eSplit[0];
+        if (eSplit.length < 2) {
             throw new MonoBotException("Even if you don't want to go, you have to set the start date! :o");
         }
-        String[] e_split_2 = e_split[1].split(" /to ");
-        if (e_split_2.length < 2) {
+        String[] eSplit2 = eSplit[1].split(" /to ");
+        if (eSplit2.length < 2) {
             throw new MonoBotException("Even if you don't want it to end, you have to set the end date! :o");
         }
-        String dt = e_split_2[0];
+        String dt = eSplit2[0];
         try {
             DateTime start = new DateTime(dt);
-            dt = e_split_2[1];
+            dt = eSplit2[1];
             DateTime end = new DateTime(dt);
-            return new TaskCommand(CommandType.AddTask, new Event(e_name, start, end));
+            return new TaskCommand(CommandType.AddTask, new Event(eName, start, end));
 
         } catch (DateTimeParseException e) {
             throw new DateTimeFormatException(dt);
@@ -118,22 +117,22 @@ public class MonoBotInputParser {
      * Parses input intended for creating a Deadline
      * @param split Parsed input
      */
-    private Command ProcessDeadlineInput(String[] split) throws MonoBotException {
+    private Command processDeadlineInput(String[] split) throws MonoBotException {
         if (split.length < 2) {
             throw new MonoBotException("Deadline description is empty! :o");
         }
         if (!split[1].contains(" /by ")) {
             throw new MonoBotException("Even if you don't want to do it, you have to set the deadline! :o");
         }
-        String[] d_split = split[1].split(" /by ");
-        String d_name = d_split[0];
-        if (d_split.length < 2) {
+        String[] dSplit = split[1].split(" /by ");
+        String dName = dSplit[0];
+        if (dSplit.length < 2) {
             throw new MonoBotException("Even if you don't want to do it, you have to set the deadline! :o");
         }
         String deadline = "";
         try {
-            deadline = d_split[1];
-            return new TaskCommand(CommandType.AddTask, new Deadline(d_name, new DateTime(deadline)));
+            deadline = dSplit[1];
+            return new TaskCommand(CommandType.AddTask, new Deadline(dName, new DateTime(deadline)));
         } catch (DateTimeParseException e) {
             throw new DateTimeFormatException(deadline);
         }
@@ -143,7 +142,7 @@ public class MonoBotInputParser {
      * Parses input intended for marking a task complete
      * @param split Parsed input
      */
-    private Command ProcessMarkInput(String[] split) throws MonoBotException {
+    private Command processMarkInput(String[] split) throws MonoBotException {
         if (split.length < 2) {
             throw new MissingTaskNumberException("mark");
         }
@@ -160,7 +159,7 @@ public class MonoBotInputParser {
      * Parses input intended for unmarking a task
      * @param split Parsed input
      */
-    private Command ProcessUnmarkInput(String[] split) throws MonoBotException {
+    private Command processUnmarkInput(String[] split) throws MonoBotException {
         if (split.length < 2) {
             throw new MissingTaskNumberException("unmark");
         }
@@ -178,7 +177,7 @@ public class MonoBotInputParser {
      * Parses input intended for deleting a task
      * @param split Parsed input
      */
-    private Command ProcessDeleteInput(String[] split) throws MonoBotException {
+    private Command processDeleteInput(String[] split) throws MonoBotException {
         if (split.length < 2) {
             throw new MissingTaskNumberException("delete");
         }

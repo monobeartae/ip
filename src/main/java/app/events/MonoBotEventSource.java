@@ -47,7 +47,7 @@ public class MonoBotEventSource {
             listener.onTaskMarkedCompleteEvent(idx, valid);
         }
     }
-    protected void invokeTaskUnmarkedEvent(int idx, boolean  valid) {
+    protected void invokeTaskUnmarkedEvent(int idx, boolean valid) {
         for (MonoBotEventListener listener : listeners) {
             listener.onTaskUnmarkedEvent(idx, valid);
         }

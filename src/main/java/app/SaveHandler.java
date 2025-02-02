@@ -9,13 +9,13 @@ import java.util.Scanner;
 
 import app.exceptions.MonoBotException;
 import app.tasks.Task;
-;
+
 
 /**
  * Class to handle saving and loading tasks data for MonoBot
  */
 public class SaveHandler {
-   private final String SAVE_FILE_NAME = "./src/main/java/app/data/monobot_tasks.txt";
+    private final String SAVE_FILE_NAME = "./src/main/java/app/data/monobot_tasks.txt";
 
     /**
      * Saves tasks in specified format in specified file location
@@ -38,7 +38,7 @@ public class SaveHandler {
             throw new MonoBotException(e.getMessage());
         }
     }
-    
+   
     /**
      * Loads tasks from specified save file location
      * @return Decoded Tasks

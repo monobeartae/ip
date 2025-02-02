@@ -3,7 +3,7 @@ package app.tasks;
 /**
  * Represents a Todo
  */
-public class Todo extends Task{
+public class Todo extends Task {
     public Todo(String name) {
         super(name);
     }
@@ -30,8 +30,9 @@ public class Todo extends Task{
             return null;
         }
         Todo todo = new Todo(split[1]);
-        if (split[2].equals("true"))
+        if (split[2].equals("true")) {
             todo.markAsComplete();
+        }
         return todo;
     }
 }

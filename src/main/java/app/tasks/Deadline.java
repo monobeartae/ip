@@ -35,8 +35,9 @@ public class Deadline extends Task {
             return null;
         }
         Deadline d = new Deadline(split[2], new DateTime(split[1]));
-        if (split[3].equals("true"))
+        if (split[3].equals("true")) {
             d.markAsComplete();
+        }
         return d;
     }
 }

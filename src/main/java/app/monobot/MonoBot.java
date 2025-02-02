@@ -28,6 +28,9 @@ public class MonoBot extends MonoBotEventSource {
        
     }
 
+    /**
+     * Starts the bot, initialise variables and load saved tasks
+     */
     public void startBot() {
         this.isRunning = true;
         this.saveHandler = new SaveHandler();
@@ -39,6 +42,10 @@ public class MonoBot extends MonoBotEventSource {
         return this.isRunning; 
     }
 
+    /**
+     * Stops the bot, save tasks
+     * @throws MonoBotException
+     */
     public void stopBot() throws MonoBotException {
         this.saveHandler.saveTasks(this.tasks);
         this.isRunning = false;
@@ -60,13 +67,13 @@ public class MonoBot extends MonoBotEventSource {
             if (!(cmd instanceof TaskCommand)) {
                 throw new CommandTypeMismatchException(type, TaskCommand.class, cmd.getClass());
             }
-            this.addTask(((TaskCommand)cmd).getTask());
+            this.addTask(((TaskCommand) cmd).getTask());
             break;
         case DeleteTask:
             if (!(cmd instanceof TaskIndexCommand)) {
                 throw new CommandTypeMismatchException(type, TaskIndexCommand.class, cmd.getClass());
             }
-            this.deleteTask(((TaskIndexCommand)cmd).getIndex());
+            this.deleteTask(((TaskIndexCommand) cmd).getIndex());
             break;
         case PrintTasklist:
             this.printTaskList();
@@ -75,19 +82,19 @@ public class MonoBot extends MonoBotEventSource {
             if (!(cmd instanceof StringCommand)) {
                 throw new CommandTypeMismatchException(type, StringCommand.class, cmd.getClass());
             }
-            this.printFindTaskList(((StringCommand)cmd).getKeyword());
+            this.printFindTaskList(((StringCommand) cmd).getKeyword());
             break;
         case MarkTask:
             if (!(cmd instanceof TaskIndexCommand)) {
                 throw new CommandTypeMismatchException(type, TaskIndexCommand.class, cmd.getClass());
             }
-            this.markTaskComplete(((TaskIndexCommand)cmd).getIndex());
+            this.markTaskComplete(((TaskIndexCommand) cmd).getIndex());
             break;
         case UnmarkTask:
             if (!(cmd instanceof TaskIndexCommand)) {
                 throw new CommandTypeMismatchException(type, TaskIndexCommand.class, cmd.getClass());
             }
-            this.unmarkCompletedTask(((TaskIndexCommand)cmd).getIndex());
+            this.unmarkCompletedTask(((TaskIndexCommand) cmd).getIndex());
             break;
         default:
             break;
@@ -120,7 +127,7 @@ public class MonoBot extends MonoBotEventSource {
         if (idx > this.tasks.size()) {
             throw new InvalidTaskNumberException(idx);
         }
-         if (!this.tasks.get(idx - 1).getIsCompleted()) {
+        if (!this.tasks.get(idx - 1).getIsCompleted()) {
             this.invokeTaskUnmarkedEvent(idx, false);
             return;
         }
@@ -128,10 +135,17 @@ public class MonoBot extends MonoBotEventSource {
         this.invokeTaskUnmarkedEvent(idx, true);
     }
 
+    /**
+     * Prints the tasklist
+     */
     private void printTaskList() {
         this.invokePrintTasklistEvent(this.tasks);
     }
 
+    /**
+     * Prints tasks which contain a match to the specified keyword
+     * @param keyword
+     */
     private void printFindTaskList(String keyword) {
         ArrayList<Task> tasks = new ArrayList<>();
         for (Task task : this.tasks) {
@@ -142,11 +156,20 @@ public class MonoBot extends MonoBotEventSource {
         this.invokePrintTasklistEvent(tasks);
     }
     
+    /**
+     * Adds a task
+     * @param task Task to be added
+     */
     private void addTask(Task task) {
         this.tasks.add(task);
         this.invokeTaskAddedEvent(task, this.tasks.size());
     }
     
+    /**
+     * Deletes a task
+     * @param taskNumber Task number to be deleted
+     * @throws MonoBotException
+     */
     private void deleteTask(int taskNumber) throws MonoBotException {
         if (taskNumber > this.tasks.size()) {
             throw new InvalidTaskNumberException(taskNumber);

@@ -27,8 +27,9 @@ public class UserInputHandler {
     public String getUserInput() {
         System.out.print("Input: ");
         String input = sc.nextLine();
-        if (inputType == InputType.Auto)
+        if (inputType == InputType.Auto) {
             System.out.println();
+        }
         return input;
     }
 }

@@ -78,9 +78,18 @@ public class MonoBotUIHandler implements MonoBotEventListener {
             return;
         }
         String[] list = new String[tasklist.size()];
-        for (int i = 0; i < tasklist.size(); i++)
+        for (int i = 0; i < tasklist.size(); i++) {
             list[i] = String.format("%d. %s", i + 1, tasklist.get(i).toString());
+        }
         this.printMessage(list);
+    }
+
+    /**
+     * Prints an error message in the specified format
+     * @param context Error message to print
+     */
+    public void printErrorMessage(String context) {
+        this.printMessage("\\(T o T)'/ " + context);
     }
 
     /**
@@ -94,21 +103,14 @@ public class MonoBotUIHandler implements MonoBotEventListener {
     }
 
     /**
-     * Prints an error message in the specified format
-     * @param msg
-     */
-    public void printErrorMessage(String context) {
-        this.printMessage("\\(T o T)'/ " + context);
-    }
-
-    /**
      * Prints lines of messages in the specified format
      * @param msg
      */
     private void printMessage(String[] msg) {
         System.out.println(this.INDENT + this.SEPARATOR);
-        for (String s : msg)
+        for (String s : msg) {
             System.out.println(this.INDENT + s);
+        }
         System.out.println(this.INDENT + this.SEPARATOR);
     }
 
@@ -118,8 +120,9 @@ public class MonoBotUIHandler implements MonoBotEventListener {
      */
     private void printMessage(ArrayList<String> msg) {
         System.out.println(this.INDENT + this.SEPARATOR);
-        for (String s : msg)
+        for (String s : msg) {
             System.out.println(this.INDENT + s);
+        }
         System.out.println(this.INDENT + this.SEPARATOR);
     }
 }
