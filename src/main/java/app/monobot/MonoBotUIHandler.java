@@ -14,11 +14,11 @@ public class MonoBotUIHandler implements MonoBotEventListener {
     private final String SEPARATOR = "________________\n";
 
     public MonoBotUIHandler(MonoBot bot) {
-        bot.AddListener(this);
+        bot.attachListener(this);
     }
 
     @Override
-    public void OnStartBotEvent() {
+    public void onStartBotEvent() {
         String[] welcomeMessages = new String[] {
             "Hi There! I'm Mono. What can I do for you today?",
             "",
@@ -36,12 +36,12 @@ public class MonoBotUIHandler implements MonoBotEventListener {
     }
 
     @Override
-    public void OnStopBotEvent() {
+    public void onStopBotEvent() {
         printMessage("Goodbye :( See you again soon!");
     }
 
     @Override
-    public void OnTaskAddedEvent(Task task, int numTasks) {
+    public void onTaskAddedEvent(Task task, int numTasks) {
         String[] msg = new String[] {
             "Got it! I've added this task for you:",
             "-> " + task.toString(),
@@ -51,7 +51,7 @@ public class MonoBotUIHandler implements MonoBotEventListener {
     }
 
     @Override
-    public void OnTaskDeletedEvent(Task task, int numTasks) {
+    public void onTaskDeletedEvent(Task task, int numTasks) {
         String[] msg = new String[] {
             "Got it! I've removed this task for you:",
             "-> " + task.toString(),
@@ -61,18 +61,18 @@ public class MonoBotUIHandler implements MonoBotEventListener {
     }
 
     @Override
-    public void OnTaskMarkedCompleteEvent(int idx, boolean valid) {
+    public void onTaskMarkedCompleteEvent(int idx, boolean valid) {
         this.printErrorMessage("Task " + idx + (valid ? " has been marked complete!" : " is already completed!"));
         
     }
 
     @Override
-    public void OnTaskUnmarkedEvent(int idx, boolean valid) {
+    public void onTaskUnmarkedEvent(int idx, boolean valid) {
         this.printErrorMessage("Task " + idx + (valid ? " has been unmarked!" : " has not been completed!"));
     }
 
     @Override
-    public void OnPrintTasklistEvent(final ArrayList<Task> tasklist) {
+    public void onPrintTasklistEvent(final ArrayList<Task> tasklist) {
         if (tasklist.isEmpty()) {
             this.printMessage("You have no tasks!");
             return;

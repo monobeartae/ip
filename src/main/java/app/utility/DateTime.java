@@ -17,33 +17,33 @@ public class DateTime {
     private static final String OUTPUT_FORMAT = "d MMM yyyy h.mm a";
 
     public DateTime(String inputText) throws DateTimeParseException {
-        this.datetime = LocalDateTime.parse(inputText, DateTime.GetInputFormatter());
+        this.datetime = LocalDateTime.parse(inputText, DateTime.getInputFormatter());
     }
 
     /**
      * Formats the date and time according to OUTPUT_FORMAT
      * @return Formatted DateTime String
      */
-    public String AsFormattedOutputString() {
-        return this.datetime.format(DateTime.GetOutputFormatter());
+    public String formatAsOutputString() {
+        return this.datetime.format(DateTime.getOutputFormatter());
     }
 
     /**
      * Formats the date and time according to INPUT_FORMAT
      * @return Formatted DateTime String
      */
-    public String AsFormattedInputString() {
-        return this.datetime.format(DateTime.GetInputFormatter());
+    public String formatAsInputString() {
+        return this.datetime.format(DateTime.getInputFormatter());
     }
 
-    private static DateTimeFormatter GetOutputFormatter() {
+    private static DateTimeFormatter getOutputFormatter() {
         if (outputFormatter == null) {
             outputFormatter = DateTimeFormatter.ofPattern(OUTPUT_FORMAT);
         }
         return outputFormatter;
     }
 
-    private static DateTimeFormatter GetInputFormatter() {
+    private static DateTimeFormatter getInputFormatter() {
         if (inputFormatter == null) {
             inputFormatter = DateTimeFormatter.ofPattern(INPUT_FORMAT);
         }

@@ -15,12 +15,12 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + String.format(" (by: %s)", this.deadline.AsFormattedOutputString());
+        return "[D]" + super.toString() + String.format(" (by: %s)", this.deadline.formatAsOutputString());
     }
 
     @Override
-    public String EncodeTask() {
-        return "D|" + this.deadline.AsFormattedInputString() + "|" + super.EncodeTask();
+    public String encodeTask() {
+        return "D|" + this.deadline.formatAsInputString() + "|" + super.encodeTask();
     }
 
     /**
@@ -28,7 +28,7 @@ public class Deadline extends Task {
      * @param line Encoded Deadline task as a string
      * @return Deadline object
      */
-    public static Deadline Decode(String line) {
+    public static Deadline decode(String line) {
         String[] split = line.split("\\|");
         if (split.length != 4) {
             System.out.println("Deadline: Could not decode '" + line + "'. PLease check the format.");
@@ -36,7 +36,7 @@ public class Deadline extends Task {
         }
         Deadline d = new Deadline(split[2], new DateTime(split[1]));
         if (split[3].equals("true"))
-            d.MarkAsComplete();
+            d.markAsComplete();
         return d;
     }
 }

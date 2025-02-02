@@ -14,48 +14,48 @@ public class MonoBotEventSource {
         this.listeners = new ArrayList<>();
     }
 
-    public void AddListener(MonoBotEventListener listener) {
+    public void attachListener(MonoBotEventListener listener) {
         this.listeners.add(listener);
     }
     
-    protected void InvokeStartBotEvent() {
+    protected void invokeStartBotEvent() {
         for (MonoBotEventListener listener : listeners) {
-            listener.OnStartBotEvent();
+            listener.onStartBotEvent();
         }
     }
 
-    protected void InvokeStopBotEvent() {
+    protected void invokeStopBotEvent() {
         for (MonoBotEventListener listener : listeners) {
-            listener.OnStopBotEvent();
+            listener.onStopBotEvent();
         }
     }
     
-    protected void InvokeTaskAddedEvent(Task task, int numTasks) {
+    protected void invokeTaskAddedEvent(Task task, int numTasks) {
         for (MonoBotEventListener listener : listeners) {
-            listener.OnTaskAddedEvent(task, numTasks);
+            listener.onTaskAddedEvent(task, numTasks);
         }
     }
 
-    protected void InvokeTaskDeletedEvent(Task task, int numTasks) {
+    protected void invokeTaskDeletedEvent(Task task, int numTasks) {
         for (MonoBotEventListener listener : listeners) {
-            listener.OnTaskDeletedEvent(task, numTasks);
+            listener.onTaskDeletedEvent(task, numTasks);
         }
     }
 
-    protected void InvokeTaskMarkedCompleteEvent(int idx, boolean valid) {
+    protected void invokeTaskMarkedCompleteEvent(int idx, boolean valid) {
         for (MonoBotEventListener listener : listeners) {
-            listener.OnTaskMarkedCompleteEvent(idx, valid);
+            listener.onTaskMarkedCompleteEvent(idx, valid);
         }
     }
-    protected void InvokeTaskUnmarkedEvent(int idx, boolean  valid) {
+    protected void invokeTaskUnmarkedEvent(int idx, boolean  valid) {
         for (MonoBotEventListener listener : listeners) {
-            listener.OnTaskUnmarkedEvent(idx, valid);
+            listener.onTaskUnmarkedEvent(idx, valid);
         }
     }
 
-    protected void InvokePrintTasklistEvent(final ArrayList<Task> tasklist) {
+    protected void invokePrintTasklistEvent(final ArrayList<Task> tasklist) {
         for (MonoBotEventListener listener : listeners) {
-            listener.OnPrintTasklistEvent(tasklist);
+            listener.onPrintTasklistEvent(tasklist);
         }
     }
 }

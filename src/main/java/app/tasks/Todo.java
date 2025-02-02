@@ -14,8 +14,8 @@ public class Todo extends Task{
     }
 
     @Override
-    public String EncodeTask() {
-        return "T|" + super.EncodeTask();
+    public String encodeTask() {
+        return "T|" + super.encodeTask();
     }
 
     /**
@@ -23,7 +23,7 @@ public class Todo extends Task{
      * @param line Encoded Todo task as a string
      * @return Todo object
      */
-    public static Todo Decode(String line) {
+    public static Todo decode(String line) {
         String[] split = line.split("\\|");
         if (split.length != 3) {
             System.out.println("Todo: Could not decode '" + line + "'. PLease check the format.");
@@ -31,7 +31,7 @@ public class Todo extends Task{
         }
         Todo todo = new Todo(split[1]);
         if (split[2].equals("true"))
-            todo.MarkAsComplete();
+            todo.markAsComplete();
         return todo;
     }
 }

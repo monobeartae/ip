@@ -21,7 +21,7 @@ public class SaveHandler {
      * Saves tasks in specified format in specified file location
      * @param tasks Tasks to save
      */
-    public void SaveTasks(ArrayList<Task> tasks) throws MonoBotException {
+    public void saveTasks(ArrayList<Task> tasks) throws MonoBotException {
         File saveFile = new File(SAVE_FILE_NAME);
         try {
             if (!saveFile.exists()) {
@@ -30,7 +30,7 @@ public class SaveHandler {
             FileWriter fw = new FileWriter(saveFile);
             String saveString = "";
             for (Task t : tasks) {
-                saveString += t.EncodeTask();
+                saveString += t.encodeTask();
             }
             fw.write(saveString);
             fw.close();
@@ -43,18 +43,18 @@ public class SaveHandler {
      * Loads tasks from specified save file location
      * @return Decoded Tasks
      */
-    public ArrayList<Task> LoadTasks() {
+    public ArrayList<Task> loadTasks() {
         File saveFile = new File(SAVE_FILE_NAME);
         Scanner sc = null;
         try {
             sc = new Scanner(saveFile);
         } catch (FileNotFoundException e) {
-            return new ArrayList<Task>();
+            return new ArrayList<>();
         }
         ArrayList<Task> tasks = new ArrayList<>();
         while (sc.hasNextLine()) {
             String line = sc.nextLine();
-            tasks.add(Task.DecodeTask(line));
+            tasks.add(Task.decodeTask(line));
         }
         sc.close();
         return tasks;

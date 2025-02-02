@@ -19,12 +19,12 @@ public class Event extends Task {
     @Override
     public String toString() {
         return "[E]" + super.toString() + String.format(" (from: %s to: %s)", 
-                this.start.AsFormattedOutputString(), this.end.AsFormattedOutputString());
+                this.start.formatAsOutputString(), this.end.formatAsOutputString());
     }
 
     @Override
-    public String EncodeTask() {
-        return "E|" + this.start.AsFormattedInputString() + "|" + this.end.AsFormattedInputString() + "|" + super.EncodeTask();
+    public String encodeTask() {
+        return "E|" + this.start.formatAsInputString() + "|" + this.end.formatAsInputString() + "|" + super.encodeTask();
     }
 
     /**
@@ -32,7 +32,7 @@ public class Event extends Task {
      * @param line Encoded Eodo task as a string
      * @return Event object
      */
-    public static Event Decode(String line) {
+    public static Event decode(String line) {
         String[] split = line.split("\\|");
         if (split.length != 5) {
             System.out.println("Event: Could not decode '" + line + "'. PLease check the format.");
@@ -40,7 +40,7 @@ public class Event extends Task {
         }
         Event e = new Event(split[3], new DateTime(split[1]), new DateTime(split[2]));
         if (split[4].equals("true"))
-            e.MarkAsComplete();
+            e.markAsComplete();
         return e;
     }
 }

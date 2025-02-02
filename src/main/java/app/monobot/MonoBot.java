@@ -20,7 +20,7 @@ import app.tasks.Task;
 public class MonoBot extends MonoBotEventSource {
     private boolean isRunning = false;
 
-    private ArrayList<Task> tasklist = null;
+    private ArrayList<Task> tasks = null;
     private SaveHandler saveHandler = null;
     
 
@@ -28,108 +28,130 @@ public class MonoBot extends MonoBotEventSource {
        
     }
 
-    public void StartBot() {
+    public void startBot() {
         this.isRunning = true;
         this.saveHandler = new SaveHandler();
-        this.tasklist = saveHandler.LoadTasks();
-        this.InvokeStartBotEvent();
+        this.tasks = saveHandler.loadTasks();
+        this.invokeStartBotEvent();
     }
     
-    public boolean IsRunning() { 
+    public boolean isRunning() { 
         return this.isRunning; 
     }
 
-
-    public void StopBot() throws MonoBotException {
-        this.saveHandler.SaveTasks(this.tasklist);
+    public void stopBot() throws MonoBotException {
+        this.saveHandler.saveTasks(this.tasks);
         this.isRunning = false;
-        this.InvokeStopBotEvent();
+        this.invokeStopBotEvent();
     }
 
+    /**
+     * Processes command read by inputparser
+     * @param cmd Command
+     * @throws MonoBotException
+     */
     public void processCommand(Command cmd) throws MonoBotException {
         CommandType type = cmd.getType();
         switch (type) {
         case Exit:
-            this.StopBot();
+            this.stopBot();
             break;
         case AddTask:
             if (!(cmd instanceof TaskCommand)) {
                 throw new CommandTypeMismatchException(type, TaskCommand.class, cmd.getClass());
             }
-            this.AddTask(((TaskCommand)cmd).getTask());
+            this.addTask(((TaskCommand)cmd).getTask());
             break;
         case DeleteTask:
             if (!(cmd instanceof TaskIndexCommand)) {
                 throw new CommandTypeMismatchException(type, TaskIndexCommand.class, cmd.getClass());
             }
-            this.DeleteTask(((TaskIndexCommand)cmd).getIndex());
+            this.deleteTask(((TaskIndexCommand)cmd).getIndex());
             break;
         case PrintTasklist:
-            this.PrintTaskList();
+            this.printTaskList();
             break;
         case PrintFindTasklist:
             if (!(cmd instanceof StringCommand)) {
                 throw new CommandTypeMismatchException(type, StringCommand.class, cmd.getClass());
             }
-            this.PrintFindTaskList(((StringCommand)cmd).getKeyword());
+            this.printFindTaskList(((StringCommand)cmd).getKeyword());
             break;
         case MarkTask:
             if (!(cmd instanceof TaskIndexCommand)) {
                 throw new CommandTypeMismatchException(type, TaskIndexCommand.class, cmd.getClass());
             }
-            this.MarkTaskComplete(((TaskIndexCommand)cmd).getIndex());
+            this.markTaskComplete(((TaskIndexCommand)cmd).getIndex());
             break;
         case UnmarkTask:
             if (!(cmd instanceof TaskIndexCommand)) {
                 throw new CommandTypeMismatchException(type, TaskIndexCommand.class, cmd.getClass());
             }
-            this.UnmarkCompletedTask(((TaskIndexCommand)cmd).getIndex());
+            this.unmarkCompletedTask(((TaskIndexCommand)cmd).getIndex());
             break;
         default:
             break;
         }
     }
 
-    private void MarkTaskComplete(int idx) throws MonoBotException {
-        if (idx > this.tasklist.size()) {
+    /**
+     * Marks a task as complete
+     * @param idx Task Number
+     * @throws MonoBotException
+     */
+    private void markTaskComplete(int idx) throws MonoBotException {
+        if (idx > this.tasks.size()) {
             throw new InvalidTaskNumberException(idx);
         }
-        boolean valid = this.tasklist.get(idx - 1).MarkAsComplete();
-        this.InvokeTaskMarkedCompleteEvent(idx, valid);
+        if (this.tasks.get(idx - 1).getIsCompleted()) {
+            this.invokeTaskMarkedCompleteEvent(idx, false);
+            return;
+        }
+        this.tasks.get(idx - 1).markAsComplete();
+        this.invokeTaskMarkedCompleteEvent(idx, true);     
     }
 
-    private void UnmarkCompletedTask(int idx) throws MonoBotException {
-        if (idx > this.tasklist.size()) {
+    /**
+     * Unmarks a task from its completion state
+     * @param idx Task Number
+     * @throws MonoBotException
+     */
+    private void unmarkCompletedTask(int idx) throws MonoBotException {
+        if (idx > this.tasks.size()) {
             throw new InvalidTaskNumberException(idx);
         }
-        boolean valid = this.tasklist.get(idx - 1).UnmarkCompleted();
-        this.InvokeTaskUnmarkedEvent(idx, valid);
+         if (!this.tasks.get(idx - 1).getIsCompleted()) {
+            this.invokeTaskUnmarkedEvent(idx, false);
+            return;
+        }
+        this.tasks.get(idx - 1).unmarkCompleted();
+        this.invokeTaskUnmarkedEvent(idx, true);
     }
 
-    private void PrintTaskList() {
-        this.InvokePrintTasklistEvent(this.tasklist);
+    private void printTaskList() {
+        this.invokePrintTasklistEvent(this.tasks);
     }
 
-    private void PrintFindTaskList(String keyword) {
+    private void printFindTaskList(String keyword) {
         ArrayList<Task> tasks = new ArrayList<>();
-        for (Task task : this.tasklist) {
-            if (task.MatchName(keyword)) {
+        for (Task task : this.tasks) {
+            if (task.isMatchName(keyword)) {
                 tasks.add(task);
             }
         }
-        this.InvokePrintTasklistEvent(tasks);
+        this.invokePrintTasklistEvent(tasks);
     }
     
-    private void AddTask(Task task) {
-        this.tasklist.add(task);
-        this.InvokeTaskAddedEvent(task, this.tasklist.size());
+    private void addTask(Task task) {
+        this.tasks.add(task);
+        this.invokeTaskAddedEvent(task, this.tasks.size());
     }
     
-    private void DeleteTask(int taskNumber) throws MonoBotException {
-        if (taskNumber > this.tasklist.size()) {
+    private void deleteTask(int taskNumber) throws MonoBotException {
+        if (taskNumber > this.tasks.size()) {
             throw new InvalidTaskNumberException(taskNumber);
         }
-        Task t = this.tasklist.remove(taskNumber - 1);
-        this.InvokeTaskDeletedEvent(t, this.tasklist.size());
+        Task t = this.tasks.remove(taskNumber - 1);
+        this.invokeTaskDeletedEvent(t, this.tasks.size());
     }
 }

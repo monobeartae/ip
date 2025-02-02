@@ -9,14 +9,14 @@ import app.tasks.Task;
  */
 public interface MonoBotEventListener {
     
-    public void OnStartBotEvent();
-    public void OnStopBotEvent();
+    public void onStartBotEvent();
+    public void onStopBotEvent();
 
-    public void OnTaskAddedEvent(Task task, int numTasks);
-    public void OnTaskDeletedEvent(Task task, int numTasks);
+    public void onTaskAddedEvent(Task task, int numTasks);
+    public void onTaskDeletedEvent(Task task, int numTasks);
 
-    public void OnTaskMarkedCompleteEvent(int idx, boolean valid);
-    public void OnTaskUnmarkedEvent(int idx, boolean  valid);
+    public void onTaskMarkedCompleteEvent(int idx, boolean valid);
+    public void onTaskUnmarkedEvent(int idx, boolean  valid);
 
-    public void OnPrintTasklistEvent(final ArrayList<Task> tasklist);
+    public void onPrintTasklistEvent(final ArrayList<Task> tasklist);
 }

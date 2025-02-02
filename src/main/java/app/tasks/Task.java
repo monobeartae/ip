@@ -13,29 +13,30 @@ public class Task {
     }
 
     /**
-     * Marks the task as completed if it is not already
-     * @return true if action was previously incomplete, false otherwise
+     * Marks the task as completed 
      */
-    public boolean MarkAsComplete() {
-        if (this.isCompleted)
-            return false;
+    public void markAsComplete() {
         this.isCompleted = true;
-        return true;
     }
 
     /**
-     * Unmarks the task from completion if it is completed
-     * @return true if action was previously complete, false otherwise
+     * Unmarks the task from completion 
      */
-    public boolean UnmarkCompleted() {
-        if (!this.isCompleted)
-            return false;
+    public void unmarkCompleted() {
         this.isCompleted = false;
-        return true;
+    }
+
+    public boolean getIsCompleted() {
+        return this.isCompleted;
     }
     
-    public boolean MatchName(String match) {
-        return this.taskName.contains(match);
+    /**
+     * Checks if the task name contains the keyword given
+     * @param keyword keyword
+     * @return true if matches, false otherwise
+     */
+    public boolean isMatchName(String keyword) {
+        return this.taskName.contains(keyword);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class Task {
      * Encodes the task in a format for save data
      * @return Encoded format of task
      */
-    public String EncodeTask() {
+    public String encodeTask() {
         return taskName + "|" + isCompleted + "\n";
     }
 
@@ -56,14 +57,14 @@ public class Task {
      * @param line Encoded string representing a task
      * @return Decoded Task object from encoded string
      */
-    public static Task DecodeTask(String line) {
+    public static Task decodeTask(String line) {
         switch (line.charAt(0)) {
         case 'T':
-            return Todo.Decode(line);
+            return Todo.decode(line);
         case 'D':
-            return Deadline.Decode(line);
+            return Deadline.decode(line);
         case 'E':
-            return Event.Decode(line);
+            return Event.decode(line);
         default:
             System.out.println("DecodeTaskFailed: " + line);
             return new Task(line);

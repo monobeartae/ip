@@ -14,9 +14,9 @@ public class App {
         MonoBot bot = new MonoBot();
         MonoBotInputParser inputParser = new MonoBotInputParser();
         MonoBotUIHandler uiHandler = new MonoBotUIHandler(bot);
-        bot.StartBot();
+        bot.startBot();
 
-        while (bot.IsRunning()) {
+        while (bot.isRunning()) {
             String input = inputHandler.getUserInput();
             try {
                 Command cmd = inputParser.processInput(input);
