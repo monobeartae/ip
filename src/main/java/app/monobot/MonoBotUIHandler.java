@@ -62,13 +62,13 @@ public class MonoBotUIHandler implements MonoBotEventListener {
 
     @Override
     public void onTaskMarkedCompleteEvent(int idx, boolean valid) {
-        this.printErrorMessage("Task " + idx + (valid ? " has been marked complete!" : " is already completed!"));
+        this.printMessage("Task " + idx + (valid ? " has been marked complete!" : " is already completed!"));
         
     }
 
     @Override
     public void onTaskUnmarkedEvent(int idx, boolean valid) {
-        this.printErrorMessage("Task " + idx + (valid ? " has been unmarked!" : " has not been completed!"));
+        this.printMessage("Task " + idx + (valid ? " has been unmarked!" : " has not been completed!"));
     }
 
     @Override
