@@ -16,7 +16,7 @@ public class MonoBotGUIHandler implements MonoBotEventListener {
 
     @Override
     public void onStartBotEvent() {
-        String welcomeMessage = String.format("%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s\n%s", 
+        String[] welcomeMessages = {
             "Hi There! I'm Mono. What can I do for you today?",
             "",
             "list - view tasklist",
@@ -26,9 +26,9 @@ public class MonoBotGUIHandler implements MonoBotEventListener {
             "mark <task_number> - mark a task complete",
             "unmark <task_number> - unmark a completed task",
             "delete <task_number> - delete a task",
-            "find <keyword> - search for tasks");
+            "find <keyword> - search for tasks"};
 
-        this.sendMessage(welcomeMessage);
+        this.sendMessage(welcomeMessages);
     }
 
     @Override
@@ -93,5 +93,17 @@ public class MonoBotGUIHandler implements MonoBotEventListener {
      */
     private void sendMessage(String msg) {
         this.sendBotMsgFunction.accept(msg);
+    }
+
+    /**
+     * Sends lines of messages to the chat window as the bot
+     * @param msg
+     */
+    private void sendMessage(String... msgs) {
+        String msg = "";
+        for (String s : msgs) {
+            msg += s + "\n";
+        }
+        this.sendMessage(msg);
     }
 }
