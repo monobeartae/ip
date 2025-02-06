@@ -3,9 +3,9 @@ package app.commands;
 public class StringCommand extends Command {
     private String keyword;
 
-    public StringCommand(CommandType type, String s) {
+    public StringCommand(CommandType type, String keyword) {
         super(type);
-        this.keyword = s;
+        this.keyword = keyword;
     }
 
     public String getKeyword() {
