@@ -1,5 +1,8 @@
 package app.commands;
 
+/**
+ * Represents a command which can be understood by MonoBot
+ */
 public class Command {
     private CommandType type = CommandType.None;
     private static Command nullCommand = null;
