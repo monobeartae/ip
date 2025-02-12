@@ -29,6 +29,11 @@ public class App extends Application implements GuiEventListener {
 
     @Override
     public void start(Stage stage) {
+        initStage(stage);
+        initBot();
+    }
+
+    private void initStage(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
@@ -40,12 +45,14 @@ public class App extends Application implements GuiEventListener {
             stage.setMaxWidth(1920);
             stage.show();
 
-
             this.chatWindowGui = fxmlLoader.<GuiChatWindow>getController();
             this.chatWindowGui.attachListener(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initBot() {
         this.bot = new MonoBot();
         this.parser = new MonoBotInputParser();
         this.guiHandler = new MonoBotGuiHandler(this.bot, (text) -> {
