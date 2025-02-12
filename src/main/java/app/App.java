@@ -3,31 +3,37 @@ package app;
 import java.io.IOException;
 
 import app.commands.Command;
-import app.events.GUIEventListener;
+import app.events.GuiEventListener;
 import app.exceptions.MonoBotException;
 import app.exceptions.MonoBotRuntimeException;
-import app.gui.GUIChatWindow;
+import app.gui.GuiChatWindow;
 import app.monobot.MonoBot;
-import app.monobot.MonoBotGUIHandler;
+import app.monobot.MonoBotGuiHandler;
 import app.monobot.MonoBotInputParser;
-import app.monobot.MonoBotUIHandler;
+import app.monobot.MonoBotUiHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+/**
+ * Represents the main application
+ */
+public class App extends Application implements GuiEventListener {
 
-public class App extends Application implements GUIEventListener {
-
-    private GUIChatWindow chatWindowGui = null;
+    private GuiChatWindow chatWindowGui = null;
     private MonoBot bot = null;
     private MonoBotInputParser parser = null;
-    private MonoBotGUIHandler guiHandler = null;
+    private MonoBotGuiHandler guiHandler = null;
 
     @Override
     public void start(Stage stage) {
+        initStage(stage);
+        initBot();
+    }
+
+    private void initStage(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
@@ -39,15 +45,17 @@ public class App extends Application implements GUIEventListener {
             stage.setMaxWidth(1920);
             stage.show();
 
-
-            this.chatWindowGui = fxmlLoader.<GUIChatWindow>getController();
+            this.chatWindowGui = fxmlLoader.<GuiChatWindow>getController();
             this.chatWindowGui.attachListener(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void initBot() {
         this.bot = new MonoBot();
         this.parser = new MonoBotInputParser();
-        this.guiHandler = new MonoBotGUIHandler(this.bot, (text) -> {
+        this.guiHandler = new MonoBotGuiHandler(this.bot, (text) -> {
             this.chatWindowGui.addBotDialogue(text);
         });
         this.bot.startBot();
@@ -74,7 +82,7 @@ public class App extends Application implements GUIEventListener {
 
         MonoBot bot = new MonoBot();
         MonoBotInputParser inputParser = new MonoBotInputParser();
-        MonoBotUIHandler uiHandler = new MonoBotUIHandler(bot);
+        MonoBotUiHandler uiHandler = new MonoBotUiHandler(bot);
         bot.startBot();
 
         while (bot.isRunning()) {

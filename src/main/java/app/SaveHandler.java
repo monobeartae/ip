@@ -38,7 +38,7 @@ public class SaveHandler {
             throw new MonoBotException(e.getMessage());
         }
     }
-   
+
     /**
      * Loads tasks from specified save file location
      * @return Decoded Tasks

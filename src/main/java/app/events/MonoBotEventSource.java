@@ -17,7 +17,7 @@ public class MonoBotEventSource {
     public void attachListener(MonoBotEventListener listener) {
         this.listeners.add(listener);
     }
-    
+
     protected void invokeStartBotEvent() {
         for (MonoBotEventListener listener : listeners) {
             listener.onStartBotEvent();
@@ -29,7 +29,7 @@ public class MonoBotEventSource {
             listener.onStopBotEvent();
         }
     }
-    
+
     protected void invokeTaskAddedEvent(Task task, int numTasks) {
         for (MonoBotEventListener listener : listeners) {
             listener.onTaskAddedEvent(task, numTasks);
@@ -47,7 +47,7 @@ public class MonoBotEventSource {
             listener.onTaskMarkedCompleteEvent(idx, valid);
         }
     }
-    
+
     protected void invokeTaskUnmarkedEvent(int idx, boolean valid) {
         for (MonoBotEventListener listener : listeners) {
             listener.onTaskUnmarkedEvent(idx, valid);

@@ -1,6 +1,6 @@
 package app.events;
 
 
-public interface GUIEventSource {
-    public void attachListener(GUIEventListener listener);
+public interface GuiEventSource {
+    public void attachListener(GuiEventListener listener);
 }

@@ -2,10 +2,10 @@ package app.gui;
 
 import java.util.ArrayList;
 
-import app.events.GUIEventListener;
-import app.events.GUIEventSource;
+import app.events.GuiEventListener;
+import app.events.GuiEventSource;
+
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -13,9 +13,9 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
-public class GUIChatWindow extends AnchorPane implements GUIEventSource {
+public class GuiChatWindow extends AnchorPane implements GuiEventSource {
     @FXML
-    private ScrollPane scrollPane= null;
+    private ScrollPane scrollPane = null;
     @FXML
     private VBox dialogContainer = null;
     @FXML
@@ -24,12 +24,12 @@ public class GUIChatWindow extends AnchorPane implements GUIEventSource {
     private Button sendButton = null;
 
 
-    private ArrayList<GUIEventListener> listeners = null;
+    private ArrayList<GuiEventListener> listeners = null;
 
-    private Image userImage = new Image(this.getClass().getResourceAsStream("/images/kanae_roto.jpg"));
-    private Image botImage = new Image(this.getClass().getResourceAsStream("/images/kanae.png"));
+    private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/kanae_roto.jpg"));
+    private final Image botImage = new Image(this.getClass().getResourceAsStream("/images/kanae.png"));
 
-    public GUIChatWindow() {
+    public GuiChatWindow() {
         this.listeners = new ArrayList<>();
     }
 
@@ -48,12 +48,12 @@ public class GUIChatWindow extends AnchorPane implements GUIEventSource {
         this.userInput.clear();
     }
 
-    public void attachListener(GUIEventListener listener) {
+    public void attachListener(GuiEventListener listener) {
         this.listeners.add(listener);
     }
 
     private void invokeUserInputEvent(String input) {
-        for (GUIEventListener listener : this.listeners) {
+        for (GuiEventListener listener : this.listeners) {
             listener.onUserInputEvent(input);
         }
     }
@@ -64,7 +64,7 @@ public class GUIChatWindow extends AnchorPane implements GUIEventSource {
      */
     public void addUserDialogue(String text) {
         this.dialogContainer.getChildren().addAll(
-            GUIDialogueBox.getRightDialogueBox(text, this.userImage));
+            GuiDialogueBox.getRightDialogueBox(text, this.userImage));
     }
 
     /**
@@ -73,6 +73,6 @@ public class GUIChatWindow extends AnchorPane implements GUIEventSource {
      */
     public void addBotDialogue(String text) {
         this.dialogContainer.getChildren().addAll(
-            GUIDialogueBox.getLeftDialogueBox(text, this.botImage));
+            GuiDialogueBox.getLeftDialogueBox(text, this.botImage));
     }
 }

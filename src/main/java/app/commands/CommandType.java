@@ -1,5 +1,8 @@
 package app.commands;
 
+/**
+ * Represents a Command Type
+ */
 public enum CommandType {
     None,
     AddTask,

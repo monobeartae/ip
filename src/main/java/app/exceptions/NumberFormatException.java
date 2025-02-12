@@ -6,5 +6,4 @@ public class NumberFormatException extends MonoBotException {
     public String getMessage() {
         return "Do you perhaps not know what a number is? :o";
     }
-    
 }

@@ -3,7 +3,7 @@ package app.commands;
 import app.tasks.Task;
 
 public class TaskCommand extends Command {
-    
+
     private Task task = null;
 
     public TaskCommand(CommandType type, Task task) {
