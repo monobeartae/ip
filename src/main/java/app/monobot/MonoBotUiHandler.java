@@ -13,8 +13,20 @@ public class MonoBotUiHandler implements MonoBotEventListener {
     private final String INDENT = "   ";
     private final String SEPARATOR = "________________\n";
 
-    private final String MESSAGE_FORMAT_EMPTY_TASKLIST = "You have no tasks!!";
+    private final String[] MESSAGE_FORMAT_WELCOME = new String[] {
+            "Hi There! I'm Mono. What can I do for you today?",
+            "--COMMANDS--",
+            "list - view tasklist",
+            "todo <task_name> - add a todo task",
+            "deadline <task_name> /by <deadline: d/M/yyyy HHmm> - add a deadline task",
+            "event <task_name> /from <start: d/M/yyyy HHmm> /to <end: d/M/yyyy HHmm> - add an event task",
+            "mark <task_number> - mark a task complete",
+            "unmark <task_number> - unmark a completed task",
+            "delete <task_number> - delete a task",
+            "find <keyword> - search for tasks",
+            "help - print command list"};
     private final String MESSAGE_FORMAT_GOODBYE = "Goodbye :( See you again soon!";
+    private final String MESSAGE_FORMAT_EMPTY_TASKLIST = "You have no tasks!!";
     private final String MESSAGE_FORMAT_ERROR = "\\(T o T)'/ %s";
 
     public MonoBotUiHandler(MonoBot bot) {
@@ -23,25 +35,17 @@ public class MonoBotUiHandler implements MonoBotEventListener {
 
     @Override
     public void onStartBotEvent() {
-        String[] welcomeMessages = new String[] {
-            "Hi There! I'm Mono. What can I do for you today?",
-            "",
-            "list - view tasklist",
-            "todo <task_name> - add a todo task",
-            "deadline <task_name> /by <deadline: d/M/yyyy HHmm> - add a deadline task",
-            "event <task_name> /from <start: d/M/yyyy HHmm> /to <end: d/M/yyyy HHmm> - add an event task",
-            "mark <task_number> - mark a task complete",
-            "unmark <task_number> - unmark a completed task",
-            "delete <task_number> - delete a task",
-            "find <keyword> - search for tasks"
-
-        };
-        printMessage(welcomeMessages);
+        printMessage(this.MESSAGE_FORMAT_WELCOME);
     }
 
     @Override
     public void onStopBotEvent() {
         printMessage(this.MESSAGE_FORMAT_GOODBYE);
+    }
+
+    @Override
+    public void onPrintCommandsEvent() {
+        printMessage(this.MESSAGE_FORMAT_WELCOME);
     }
 
     @Override

@@ -41,6 +41,10 @@ public class MonoBotInputParser {
             // this.bot.PrintTaskList();
             return new Command(CommandType.PrintTasklist);
         }
+        if (input.equals("help")) {
+            // this.bot.PrintTaskList();
+            return new Command(CommandType.Help);
+        }
         if (input.contains("|")) {
             throw new SpecialCharacterException("|");
         }

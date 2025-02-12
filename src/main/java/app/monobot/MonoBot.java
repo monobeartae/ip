@@ -62,6 +62,9 @@ public class MonoBot extends MonoBotEventSource {
         case Exit:
             this.stopBot();
             break;
+        case Help:
+            this.printCommandsList();
+            break;
         case AddTask:
             if (!(cmd instanceof TaskCommand)) {
                 throw new CommandTypeMismatchException(type, TaskCommand.class, cmd.getClass());
@@ -98,6 +101,10 @@ public class MonoBot extends MonoBotEventSource {
         default:
             break;
         }
+    }
+
+    private void printCommandsList() {
+        this.invokePrintCommandsEvent();
     }
 
     /**

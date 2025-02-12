@@ -19,4 +19,5 @@ public interface MonoBotEventListener {
     public void onTaskUnmarkedEvent(int idx, boolean valid);
 
     public void onPrintTasklistEvent(final ArrayList<Task> tasklist);
+    public void onPrintCommandsEvent();
 }

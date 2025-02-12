@@ -11,5 +11,6 @@ public enum CommandType {
     DeleteTask,
     PrintTasklist,
     PrintFindTasklist,
+    Help,
     Exit,
 }

@@ -12,8 +12,20 @@ import app.tasks.Task;
 public class MonoBotGuiHandler implements MonoBotEventListener {
     private Consumer<String> sendBotMsgFunction = null;
 
-    private final String MESSAGE_FORMAT_EMPTY_TASKLIST = "You have no tasks!!";
+    private final String[] MESSAGE_FORMAT_WELCOME = new String[] {
+            "Hi There! I'm Mono. What can I do for you today?",
+            "--COMMANDS--",
+            "list - view tasklist",
+            "todo <task_name> - add a todo task",
+            "deadline <task_name> /by <deadline: d/M/yyyy HHmm> - add a deadline task",
+            "event <task_name> /from <start: d/M/yyyy HHmm> /to <end: d/M/yyyy HHmm> - add an event task",
+            "mark <task_number> - mark a task complete",
+            "unmark <task_number> - unmark a completed task",
+            "delete <task_number> - delete a task",
+            "find <keyword> - search for tasks",
+            "help - print command list"};
     private final String MESSAGE_FORMAT_GOODBYE = "Goodbye :( See you again soon!";
+    private final String MESSAGE_FORMAT_EMPTY_TASKLIST = "You have no tasks!!";
     private final String MESSAGE_FORMAT_ERROR = "\\(T o T)'/ %s";
     private final String MESSAGE_FORMAT_TASK_ACTION =
             "Got it! I've %s this task for you:\n-> %s\nNow you have %d task(s) in your list :D";
@@ -29,24 +41,17 @@ public class MonoBotGuiHandler implements MonoBotEventListener {
 
     @Override
     public void onStartBotEvent() {
-        String[] welcomeMessages = {
-            "Hi There! I'm Mono. What can I do for you today?",
-            "",
-            "list - view tasklist",
-            "todo <task_name> - add a todo task",
-            "deadline <task_name> /by <deadline: d/M/yyyy HHmm> - add a deadline task",
-            "event <task_name> /from <start: d/M/yyyy HHmm> /to <end: d/M/yyyy HHmm> - add an event task",
-            "mark <task_number> - mark a task complete",
-            "unmark <task_number> - unmark a completed task",
-            "delete <task_number> - delete a task",
-            "find <keyword> - search for tasks"};
-
-        this.sendMessage(welcomeMessages);
+        this.sendMessage(this.MESSAGE_FORMAT_WELCOME);
     }
 
     @Override
     public void onStopBotEvent() {
         this.sendMessage(this.MESSAGE_FORMAT_GOODBYE);
+    }
+
+    @Override
+    public void onPrintCommandsEvent() {
+        this.sendMessage(this.MESSAGE_FORMAT_WELCOME);
     }
 
     @Override

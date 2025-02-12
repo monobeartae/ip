@@ -59,4 +59,10 @@ public class MonoBotEventSource {
             listener.onPrintTasklistEvent(tasklist);
         }
     }
+
+    protected void invokePrintCommandsEvent() {
+        for (MonoBotEventListener listener : listeners) {
+            listener.onPrintCommandsEvent();
+        }
+    }
 }
