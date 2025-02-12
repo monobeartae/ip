@@ -29,7 +29,7 @@ public class Task {
     public boolean getIsCompleted() {
         return this.isCompleted;
     }
-   
+
     /**
      * Checks if the task name contains the keyword given
      * @param keyword keyword

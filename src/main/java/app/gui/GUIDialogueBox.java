@@ -13,17 +13,16 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.text.Text;
 
-public class GUIDialogueBox extends HBox {
+public class GuiDialogueBox extends HBox {
     @FXML
     private Label dialogueText = null;
     @FXML
     private ImageView displayPicture = null;
 
-    private GUIDialogueBox(String text, Image icon) {
-       try {
-            FXMLLoader fxmlLoader = new FXMLLoader(GUIChatWindow.class.getResource("/view/DialogueBox.fxml"));
+    private GuiDialogueBox(String text, Image icon) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(GuiChatWindow.class.getResource("/view/DialogueBox.fxml"));
             fxmlLoader.setController(this);
             fxmlLoader.setRoot(this);
             fxmlLoader.load();
@@ -41,8 +40,8 @@ public class GUIDialogueBox extends HBox {
      * @param icon
      * @return
      */
-    public static GUIDialogueBox getLeftDialogueBox(String text, Image icon) {
-        GUIDialogueBox db = new GUIDialogueBox(text, icon);
+    public static GuiDialogueBox getLeftDialogueBox(String text, Image icon) {
+        GuiDialogueBox db = new GuiDialogueBox(text, icon);
         db.flip();
         return db;
     }
@@ -53,8 +52,8 @@ public class GUIDialogueBox extends HBox {
      * @param icon
      * @return
      */
-    public static GUIDialogueBox getRightDialogueBox(String text, Image icon) {
-        GUIDialogueBox db = new GUIDialogueBox(text, icon);
+    public static GuiDialogueBox getRightDialogueBox(String text, Image icon) {
+        GuiDialogueBox db = new GuiDialogueBox(text, icon);
         return db;
     }
 

@@ -8,12 +8,13 @@ import java.time.format.DateTimeParseException;
  * Represents a Date and Time
  */
 public class DateTime {
+    public static final String INPUT_FORMAT = "d/M/yyyy HHmm";
+    private static final String OUTPUT_FORMAT = "d MMM yyyy h.mm a";
+
     private static DateTimeFormatter inputFormatter = null;
     private static DateTimeFormatter outputFormatter = null;
 
-    public static final String INPUT_FORMAT = "d/M/yyyy HHmm";
-    private static final String OUTPUT_FORMAT = "d MMM yyyy h.mm a";
-  
+
     private LocalDateTime datetime = null;
 
     public DateTime(String inputText) throws DateTimeParseException {

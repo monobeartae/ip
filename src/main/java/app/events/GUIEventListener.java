@@ -1,5 +1,5 @@
 package app.events;
 
-public interface GUIEventListener {
+public interface GuiEventListener {
     public void onUserInputEvent(String input);
 }

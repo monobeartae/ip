@@ -22,10 +22,8 @@ public class MonoBot extends MonoBotEventSource {
 
     private ArrayList<Task> tasks = null;
     private SaveHandler saveHandler = null;
-    
 
     public MonoBot() {
-       
     }
 
     /**
@@ -37,9 +35,9 @@ public class MonoBot extends MonoBotEventSource {
         this.tasks = saveHandler.loadTasks();
         this.invokeStartBotEvent();
     }
-    
-    public boolean isRunning() { 
-        return this.isRunning; 
+
+    public boolean isRunning() {
+        return this.isRunning;
     }
 
     /**
@@ -115,7 +113,7 @@ public class MonoBot extends MonoBotEventSource {
             return;
         }
         this.tasks.get(idx - 1).markAsComplete();
-        this.invokeTaskMarkedCompleteEvent(idx, true);     
+        this.invokeTaskMarkedCompleteEvent(idx, true);
     }
 
     /**
@@ -155,7 +153,7 @@ public class MonoBot extends MonoBotEventSource {
         }
         this.invokePrintTasklistEvent(tasks);
     }
-    
+
     /**
      * Adds a task
      * @param task Task to be added
@@ -164,7 +162,7 @@ public class MonoBot extends MonoBotEventSource {
         this.tasks.add(task);
         this.invokeTaskAddedEvent(task, this.tasks.size());
     }
-    
+
     /**
      * Deletes a task
      * @param taskNumber Task number to be deleted

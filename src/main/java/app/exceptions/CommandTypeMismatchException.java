@@ -8,7 +8,7 @@ public class CommandTypeMismatchException extends MonoBotRuntimeException {
     private Class<?> actualType = null;
     private CommandType command = CommandType.None;
 
-    public <T extends Command, S extends Command> CommandTypeMismatchException(CommandType command, 
+    public <T extends Command, S extends Command> CommandTypeMismatchException(CommandType command,
             Class<T> expected, Class<S> actual) {
         this.command = command;
         this.expectedType = expected;
@@ -18,9 +18,8 @@ public class CommandTypeMismatchException extends MonoBotRuntimeException {
     @Override
     public String getMessage() {
         return String.format(
-                "CommandTypeMismatchException: Command '%s' should be of type '%s', but was '%s' instead! :(", 
+                "CommandTypeMismatchException: Command '%s' should be of type '%s', but was '%s' instead! :(",
                 this.command, this.expectedType.getName(), this.actualType.getName());
     }
-
 
 }

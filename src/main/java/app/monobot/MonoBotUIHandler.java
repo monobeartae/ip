@@ -8,12 +8,16 @@ import app.tasks.Task;
 /**
  * Class handling all UI to be printed to CLI
  */
-public class MonoBotUIHandler implements MonoBotEventListener {
+public class MonoBotUiHandler implements MonoBotEventListener {
 
     private final String INDENT = "   ";
     private final String SEPARATOR = "________________\n";
 
-    public MonoBotUIHandler(MonoBot bot) {
+    private final String MESSAGE_FORMAT_EMPTY_TASKLIST = "You have no tasks!!";
+    private final String MESSAGE_FORMAT_GOODBYE = "Goodbye :( See you again soon!";
+    private final String MESSAGE_FORMAT_ERROR = "\\(T o T)'/ %s";
+
+    public MonoBotUiHandler(MonoBot bot) {
         bot.attachListener(this);
     }
 
@@ -37,7 +41,7 @@ public class MonoBotUIHandler implements MonoBotEventListener {
 
     @Override
     public void onStopBotEvent() {
-        printMessage("Goodbye :( See you again soon!");
+        printMessage(this.MESSAGE_FORMAT_GOODBYE);
     }
 
     @Override
@@ -63,7 +67,6 @@ public class MonoBotUIHandler implements MonoBotEventListener {
     @Override
     public void onTaskMarkedCompleteEvent(int idx, boolean valid) {
         this.printMessage("Task " + idx + (valid ? " has been marked complete!" : " is already completed!"));
-        
     }
 
     @Override
@@ -74,7 +77,7 @@ public class MonoBotUIHandler implements MonoBotEventListener {
     @Override
     public void onPrintTasklistEvent(final ArrayList<Task> tasklist) {
         if (tasklist.isEmpty()) {
-            this.printMessage("You have no tasks!");
+            this.printMessage(MESSAGE_FORMAT_EMPTY_TASKLIST);
             return;
         }
         String[] list = new String[tasklist.size()];
@@ -89,7 +92,7 @@ public class MonoBotUIHandler implements MonoBotEventListener {
      * @param context Error message to print
      */
     public void printErrorMessage(String context) {
-        this.printMessage("\\(T o T)'/ " + context);
+        this.printMessage(String.format(this.MESSAGE_FORMAT_ERROR, context));
     }
 
     /**

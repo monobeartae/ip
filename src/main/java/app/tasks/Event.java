@@ -7,9 +7,9 @@ import app.utility.DateTime;
  */
 public class Event extends Task {
 
-    private DateTime start;
-    private DateTime end;
-    
+    private DateTime start = null;
+    private DateTime end = null;
+
     public Event(String name, DateTime start, DateTime end) {
         super(name);
         this.start = start;
@@ -18,14 +18,14 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + String.format(" (from: %s to: %s)", 
+        return "[E]" + super.toString() + String.format(" (from: %s to: %s)",
                 this.start.formatAsOutputString(), this.end.formatAsOutputString());
     }
 
     @Override
     public String encodeTask() {
-        return "E|" + this.start.formatAsInputString() + "|" + this.end.formatAsInputString() + 
-                "|" + super.encodeTask();
+        return "E|" + this.start.formatAsInputString() + "|" + this.end.formatAsInputString()
+                + "|" + super.encodeTask();
     }
 
     /**
