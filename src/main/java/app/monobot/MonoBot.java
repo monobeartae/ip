@@ -1,6 +1,7 @@
 package app.monobot;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import app.SaveHandler;
 import app.commands.Command;
@@ -147,12 +148,8 @@ public class MonoBot extends MonoBotEventSource {
      * @param keyword
      */
     private void printFindTaskList(String keyword) {
-        ArrayList<Task> tasks = new ArrayList<>();
-        for (Task task : this.tasks) {
-            if (task.isMatchName(keyword)) {
-                tasks.add(task);
-            }
-        }
+        ArrayList<Task> tasks = this.tasks.stream().filter(x -> x.isMatchName(keyword))
+                .collect(Collectors.toCollection(ArrayList::new));
         this.invokePrintTasklistEvent(tasks);
     }
     
