@@ -106,6 +106,8 @@ public class MonoBot extends MonoBotEventSource {
      * @throws MonoBotException
      */
     private void markTaskComplete(int idx) throws MonoBotException {
+        assert(idx >= 0);
+
         if (idx > this.tasks.size()) {
             throw new InvalidTaskNumberException(idx);
         }
@@ -123,6 +125,8 @@ public class MonoBot extends MonoBotEventSource {
      * @throws MonoBotException
      */
     private void unmarkCompletedTask(int idx) throws MonoBotException {
+        assert(idx >= 0);
+
         if (idx > this.tasks.size()) {
             throw new InvalidTaskNumberException(idx);
         }
@@ -166,6 +170,8 @@ public class MonoBot extends MonoBotEventSource {
      * @throws MonoBotException
      */
     private void deleteTask(int taskNumber) throws MonoBotException {
+        assert(taskNumber >= 0);
+
         if (taskNumber > this.tasks.size()) {
             throw new InvalidTaskNumberException(taskNumber);
         }
