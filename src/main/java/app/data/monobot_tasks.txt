@@ -2,4 +2,5 @@ T|cry|true
 E|24/3/2025 0500|23/6/2025 0200|cry even more|true
 D|22/3/2025 1200|cry extra|false
 T|ip milestones|true
-D|4/5/2025 0900|eat|false
+D|4/5/2025 0900|eat|true
+E|2/3/2025 0030|2/4/2025 0200|burnout|false

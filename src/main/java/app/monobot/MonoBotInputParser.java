@@ -24,6 +24,7 @@ public class MonoBotInputParser {
 
     private final String MSG_FORMAT_MISSING_DETAILS = "%s is empty/missing! :o";
     private final String MSG_FORMAT_MISSING_DATETIME = "Even if you don't want %s, you still have to set %s! :o";
+    private final String MSG_FORMAT_FROM_TO_MISMATCH = "You can't go back in time! This ain't isekai :o";
 
     public MonoBotInputParser() {
     }
@@ -45,7 +46,7 @@ public class MonoBotInputParser {
         if (input.contains("|")) {
             throw new SpecialCharacterException("|");
         }
-        String[] split = input.split(" ", 2);
+        String[] split = input.trim().split(" ", 2);
         String cmd = split[0];
         switch (cmd) {
         case "todo":
@@ -67,16 +68,26 @@ public class MonoBotInputParser {
         }
     }
 
+    /**
+     * Checks validity of input intended for find command and parses it into a command
+     * @return Command
+     * @throws MonoBotException
+     */
     private Command processFindInput(String[] split) throws MonoBotException {
-        if (split.length < 2) {
+        if (split.length < 2 || split[1].trim().length() == 0) {
             throw new MonoBotException(String.format(this.MSG_FORMAT_MISSING_DETAILS, "Find search keyword"));
         }
         String keyword = split[1];
         return new StringCommand(CommandType.PrintFindTasklist, keyword);
     }
 
+    /**
+     * Checks validity of input intended for todo command and parses it into a command
+     * @return Command
+     * @throws MonoBotException
+     */
     private Command processTodoInput(String[] split) throws MonoBotException {
-        if (split.length < 2) {
+        if (split.length < 2 || split[1].trim().length() == 0) {
             throw new MonoBotException(String.format(this.MSG_FORMAT_MISSING_DETAILS, "Todo description"));
         }
         String tdName = split[1];
@@ -84,11 +95,12 @@ public class MonoBotInputParser {
     }
 
     /**
-     * Parses input intended for creating an Event
-     * @param split Parsed input
+     * Checks validity of input intended for event command and parses it into a command
+     * @return Command
+     * @throws MonoBotException
      */
     private Command processEventInput(String[] split) throws MonoBotException {
-        if (split.length < 2) {
+        if (split.length < 2 || split[1].trim().length() == 0) {
             throw new MonoBotException(String.format(this.MSG_FORMAT_MISSING_DETAILS, "Event description"));
         }
         if (!split[1].contains(" /from ") || !split[1].contains(" /to ")) {
@@ -105,15 +117,19 @@ public class MonoBotInputParser {
         }
         DateTime start = parseToDateTime(eSplit2[0]);
         DateTime end = parseToDateTime(eSplit2[1]);
+        if (!start.isDateTimeBefore(end)) {
+            throw new MonoBotException(this.MSG_FORMAT_FROM_TO_MISMATCH);
+        }
         return new TaskCommand(CommandType.AddTask, new Event(eName, start, end));
     }
 
     /**
-     * Parses input intended for creating a Deadline
-     * @param split Parsed input
+     * Checks validity of input intended for deadline command and parses it into a command
+     * @return Command
+     * @throws MonoBotException
      */
     private Command processDeadlineInput(String[] split) throws MonoBotException {
-        if (split.length < 2) {
+        if (split.length < 2 || split[1].trim().length() == 0) {
             throw new MonoBotException(String.format(this.MSG_FORMAT_MISSING_DETAILS, "Deadline description"));
         }
         if (!split[1].contains(" /by ")) {
@@ -129,8 +145,9 @@ public class MonoBotInputParser {
     }
 
     /**
-     * Parses input intended for marking a task complete
-     * @param split Parsed input
+     * Checks validity of input intended for mark command and parses it into a command
+     * @return Command
+     * @throws MonoBotException
      */
     private Command processMarkInput(String[] split) throws MonoBotException {
         if (split.length < 2) {
@@ -141,8 +158,9 @@ public class MonoBotInputParser {
     }
 
     /**
-     * Parses input intended for unmarking a task
-     * @param split Parsed input
+     * Checks validity of input intended for unmark command and parses it into a command
+     * @return Command
+     * @throws MonoBotException
      */
     private Command processUnmarkInput(String[] split) throws MonoBotException {
         if (split.length < 2) {
@@ -154,8 +172,9 @@ public class MonoBotInputParser {
     }
 
     /**
-     * Parses input intended for deleting a task
-     * @param split Parsed input
+     * Checks validity of input intended for delete command and parses it into a command
+     * @return Command
+     * @throws MonoBotException
      */
     private Command processDeleteInput(String[] split) throws MonoBotException {
         if (split.length < 2) {

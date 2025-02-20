@@ -37,6 +37,13 @@ public class DateTime {
         return this.datetime.format(DateTime.getInputFormatter());
     }
 
+    /**
+     * Checks if given datetime is before stored datetime
+     */
+    public boolean isDateTimeBefore(DateTime dt) {
+        return this.datetime.isBefore(dt.datetime);
+    }
+
     private static DateTimeFormatter getOutputFormatter() {
         if (outputFormatter == null) {
             outputFormatter = DateTimeFormatter.ofPattern(OUTPUT_FORMAT);

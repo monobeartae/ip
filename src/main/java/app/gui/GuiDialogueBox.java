@@ -12,20 +12,18 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 public class GuiDialogueBox extends HBox {
+    private static final String BOT_COLOR_HEX = "#F8F8FF";
+    private static final String USER_COLOR_HEX = "#B0C4DE";
+
     @FXML
     private Label dialogueText = null;
     @FXML
     private ImageView displayPicture = null;
 
-    private static final String BOT_COLOR_HEX = "#F8F8FF";
-    private static final String USER_COLOR_HEX = "#B0C4DE";
 
     private GuiDialogueBox(String text, Image icon) {
         try {
