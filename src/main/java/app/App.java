@@ -35,6 +35,15 @@ public class App extends Application implements GuiEventListener {
         initBot();
     }
 
+    @Override
+    public void stop() {
+        try {
+            this.bot.saveBot();
+        } catch (MonoBotException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void initStage(Stage stage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/view/MainWindow.fxml"));

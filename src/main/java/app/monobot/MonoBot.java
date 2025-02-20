@@ -14,6 +14,7 @@ import app.exceptions.CommandTypeMismatchException;
 import app.exceptions.InvalidTaskNumberException;
 import app.exceptions.MonoBotException;
 import app.tasks.Task;
+import javafx.application.Platform;
 
 /**
  * Class handling MonoBot's Task Management Logic
@@ -46,8 +47,16 @@ public class MonoBot extends MonoBotEventSource {
      * @throws MonoBotException
      */
     public void stopBot() throws MonoBotException {
-        this.saveHandler.saveTasks(this.tasks);
         this.isRunning = false;
+        Platform.exit();
+    }
+
+    /**
+     * Cleans up before exit, saves tasks
+     * @throws MonoBotException
+     */
+    public void saveBot() throws MonoBotException {
+        this.saveHandler.saveTasks(this.tasks);
         this.invokeStopBotEvent();
     }
 

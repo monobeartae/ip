@@ -15,7 +15,7 @@ import app.tasks.Task;
  * Class to handle saving and loading tasks data for MonoBot
  */
 public class SaveHandler {
-    private final String SAVE_FILE_NAME = "./src/main/java/app/data/monobot_tasks.txt";
+    private final String SAVE_FILE_NAME = "./data/monobot_tasks.txt";
 
     /**
      * Saves tasks in specified format in specified file location
@@ -25,6 +25,10 @@ public class SaveHandler {
         File saveFile = new File(SAVE_FILE_NAME);
         try {
             if (!saveFile.exists()) {
+                String currentDirectory = System.getProperty("user.dir");
+                String directoryPath = currentDirectory + File.separator + "data";
+                File directory = new File(directoryPath);
+                directory.mkdir();
                 saveFile.createNewFile();
             }
             FileWriter fw = new FileWriter(saveFile);
