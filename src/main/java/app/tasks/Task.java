@@ -36,7 +36,7 @@ public class Task {
      * @return true if matches, false otherwise
      */
     public boolean isMatchName(String keyword) {
-        return this.taskName.contains(keyword);
+        return this.taskName.toLowerCase().contains(keyword.toLowerCase());
     }
 
     @Override
