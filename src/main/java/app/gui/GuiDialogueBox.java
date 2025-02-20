@@ -12,13 +12,20 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 
 public class GuiDialogueBox extends HBox {
     @FXML
     private Label dialogueText = null;
     @FXML
     private ImageView displayPicture = null;
+
+    private static final String BOT_COLOR_HEX = "#F8F8FF";
+    private static final String USER_COLOR_HEX = "#B0C4DE";
 
     private GuiDialogueBox(String text, Image icon) {
         try {
@@ -32,6 +39,20 @@ public class GuiDialogueBox extends HBox {
 
         this.dialogueText.setText(text);
         this.displayPicture.setImage(icon);
+
+        this.maskDisplayImageCircle();
+    }
+
+    /**
+     * Masks the display picture so it shows as a Circle instead of Square
+     */
+    private void maskDisplayImageCircle() {
+        Circle clip = new Circle();
+        clip.setCenterX(this.displayPicture.getFitWidth() / 2);
+        clip.setCenterY(this.displayPicture.getFitHeight() / 2);
+        clip.setRadius(this.displayPicture.getFitWidth() / 2);
+        this.displayPicture.setClip(clip);
+
     }
 
     /**
@@ -43,6 +64,7 @@ public class GuiDialogueBox extends HBox {
     public static GuiDialogueBox getLeftDialogueBox(String text, Image icon) {
         GuiDialogueBox db = new GuiDialogueBox(text, icon);
         db.flip();
+        db.dialogueText.setStyle(String.format("-fx-background-color: %s;", GuiDialogueBox.BOT_COLOR_HEX));
         return db;
     }
 
@@ -54,6 +76,7 @@ public class GuiDialogueBox extends HBox {
      */
     public static GuiDialogueBox getRightDialogueBox(String text, Image icon) {
         GuiDialogueBox db = new GuiDialogueBox(text, icon);
+        db.dialogueText.setStyle(String.format("-fx-background-color: %s;", GuiDialogueBox.USER_COLOR_HEX));
         return db;
     }
 

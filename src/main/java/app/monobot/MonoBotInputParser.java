@@ -34,15 +34,12 @@ public class MonoBotInputParser {
      */
     public Command processInput(String input) throws MonoBotException {
         if (input.equals("bye")) {
-            // this.bot.StopBot();
             return new Command(CommandType.Exit);
         }
         if (input.equals("list")) {
-            // this.bot.PrintTaskList();
             return new Command(CommandType.PrintTasklist);
         }
         if (input.equals("help")) {
-            // this.bot.PrintTaskList();
             return new Command(CommandType.Help);
         }
         if (input.contains("|")) {

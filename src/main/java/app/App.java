@@ -27,6 +27,8 @@ public class App extends Application implements GuiEventListener {
     private MonoBotInputParser parser = null;
     private MonoBotGuiHandler guiHandler = null;
 
+    private final String APP_NAME = "MonoBot O-O";
+
     @Override
     public void start(Stage stage) {
         initStage(stage);
@@ -38,6 +40,7 @@ public class App extends Application implements GuiEventListener {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            stage.setTitle(this.APP_NAME);
             stage.setScene(scene);
             stage.setMinHeight(220);
             stage.setMinWidth(417);
