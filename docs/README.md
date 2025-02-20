@@ -21,8 +21,8 @@ Example: `todo feed my cat`, `deadline submit project /by 21/2/2025 2359`, `even
 
 Mono Bot will keep track of those tasks for you!    
 ```
-Got it! I've %s this task for you:
--> %s [D] submit project (by: 21 Feb 2025 11.59 pm)
+Got it! I've added this task for you:
+-> [D][ ] submit project (by: 21 Feb 2025 11.59 pm)
 Now you have 2 task(s) in your list :D
 ```
 You can use the command `list` to view all your tasks!    
@@ -49,6 +49,12 @@ To keep track of which tasks have been completed, Mono Bot can mark tasks for yo
 Example: `mark 1`, `mark 2`...    
 ```
 Task 1 has been marked complete!
+```
+```
+Here's your tasks!
+1. [T][X] feed my cat
+2. [D][ ] submit project (by: 21 Feb 2025 11.59 pm)
+3. [E][ } sleep (from: 2 Apr 2025 11.00 pm to: 3 Apr 2025 10.00 am)
 ```
 Similarly, to unmark a task, use `unmark`.    
 Example: `unmark 1`, `unmark 2`...    
