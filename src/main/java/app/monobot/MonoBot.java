@@ -122,9 +122,7 @@ public class MonoBot extends MonoBotEventSource {
      * @throws MonoBotException
      */
     private void markTaskComplete(int idx) throws MonoBotException {
-        assert(idx >= 0);
-
-        if (idx > this.tasks.size()) {
+        if (idx == 0 || idx > this.tasks.size()) {
             throw new InvalidTaskNumberException(idx);
         }
         if (this.tasks.get(idx - 1).getIsCompleted()) {
@@ -141,9 +139,7 @@ public class MonoBot extends MonoBotEventSource {
      * @throws MonoBotException
      */
     private void unmarkCompletedTask(int idx) throws MonoBotException {
-        assert(idx >= 0);
-
-        if (idx > this.tasks.size()) {
+        if (idx == 0 || idx > this.tasks.size()) {
             throw new InvalidTaskNumberException(idx);
         }
         if (!this.tasks.get(idx - 1).getIsCompleted()) {
@@ -186,9 +182,7 @@ public class MonoBot extends MonoBotEventSource {
      * @throws MonoBotException
      */
     private void deleteTask(int taskNumber) throws MonoBotException {
-        assert(taskNumber >= 0);
-
-        if (taskNumber > this.tasks.size()) {
+        if (taskNumber == 0 || taskNumber > this.tasks.size()) {
             throw new InvalidTaskNumberException(taskNumber);
         }
         Task t = this.tasks.remove(taskNumber - 1);
