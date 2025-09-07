@@ -1,0 +1,37 @@
+
+.chat-window {
+    -fx-background-color: #27292b;
+    -fx-padding: 10px;
+}
+
+.text-box {
+    -fx-padding: 10px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 5px;
+
+    -fx-font-size: 16px;
+    -fx-text-fill: #1e1f1e;
+    -fx-font-family: "Monaco";
+}
+
+.send-button {
+    -fx-background-color: gray;
+    -fx-border-radius: 0px;
+    -fx-text-fill: ghostwhite;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-font-family: "Monaco";
+}
+
+
+.input-box {
+    -fx-text-fill: ghostwhite;
+    -fx-background-color: #494a4d;
+    -fx-font-family: "Monaco";
+    -fx-font-size: 16px;
+    -fx-border-radius: 0px;
+}
+
+.profile-pic {
+    -fx-padding: 4px;
+}
